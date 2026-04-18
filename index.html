@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentGrid — AI Strategy & Transformation</title>
-  <meta name="description" content="AgentGrid helps leadership teams build the strategy and clarity needed to navigate the AI transition. Strategy-first advisory for C-Suite and R&D." />
+  <title>Velloris — AI Strategy & Transformation</title>
+  <meta name="description" content="Velloris helps leadership teams build the strategy and clarity needed to navigate the AI transition. Strategy-first advisory for C-Suite and R&D." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900&display=swap" rel="stylesheet" />
@@ -23,30 +23,30 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <svg width="220" height="44" viewBox="0 0 260 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="256" height="50" viewBox="0 0 256 50" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <filter id="glow-pulse-nav" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="4.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <linearGradient id="gr-nav" x1="148" y1="0" x2="188" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#38bdf8"/><stop offset="1" stop-color="#a855f7"/>
+            </linearGradient>
+            <filter id="glow-nav" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="3.5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
-            <path id="small-orbit-nav" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+            <path id="small-orbit-nav" d="M 40,25 A 18,7,0,1,0,4,25 A 18,7,0,1,0,40,25"/>
           </defs>
-          <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
-          <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
-          <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/>
-          <circle cx="22" cy="26" r="1.3" fill="#fff"/>
-          <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
-          <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#small-orbit-nav"/></animateMotion></circle></g>
-          <text font-family="'Inter',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5">
-            <tspan x="50" y="36" fill="#38bdf8">a</tspan><tspan fill="#ffffff">gentgr</tspan><tspan fill="#38bdf8">i</tspan><tspan fill="#ffffff">d</tspan>
+          <ellipse cx="22" cy="25" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+          <ellipse cx="22" cy="25" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 25)"/>
+          <circle cx="22" cy="25" r="2.6" fill="#38bdf8"/><circle cx="22" cy="25" r="1.3" fill="#fff"/>
+          <g><circle cx="22" cy="7" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 25" to="360 22 25" dur="4s" repeatCount="indefinite"/></circle></g>
+          <g transform="rotate(-28 22 25)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#small-orbit-nav"/></animateMotion></circle></g>
+          <!-- base text -->
+          <text font-family="'Inter',system-ui,sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5">
+            <tspan x="48" y="34" fill="#ffffff">velloris</tspan><tspan fill="url(#gr-nav)">.ai</tspan>
           </text>
-          <text x="50" y="36" font-family="'Inter',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#00d4ff" filter="url(#glow-pulse-nav)" opacity="0">
-            <animate attributeName="opacity" values="0;0;0;0.95;1;0.95;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
-            a
-          </text>
-          <text x="50" y="36" font-family="'Inter',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" filter="url(#glow-pulse-nav)" opacity="0">
-            <animate attributeName="opacity" values="0;0;0;0.95;1;0.95;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
-            <tspan fill-opacity="0">agentgr</tspan><tspan fill="#00d4ff">i</tspan>
+          <!-- glow overlay on .ai -->
+          <text x="48" y="34" font-family="'Inter',system-ui,sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5" filter="url(#glow-nav)" opacity="0">
+            <animate attributeName="opacity" values="0;0;0;0.9;1;0.9;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="4s" repeatCount="indefinite"/>
+            <tspan fill-opacity="0">velloris</tspan><tspan fill="url(#gr-nav)">.ai</tspan>
           </text>
         </svg>
       </a>
@@ -120,7 +120,7 @@
       <div class="about-grid">
         <div class="about-left">
           <h2 class="reveal-text">We Don't <span class="grad-text">Consult.</span><br/>We Transform.</h2>
-          <p class="reveal">AgentGrid was built by practitioners who have led AI programs inside fast-moving tech companies. We've lived the chaos of balancing AI ambitions with engineering deadlines, product roadmaps, and data debt.</p>
+          <p class="reveal">Velloris was built by practitioners who have led AI programs inside fast-moving tech companies. We've lived the chaos of balancing AI ambitions with engineering deadlines, product roadmaps, and data debt.</p>
           <p class="reveal">We don't hand you a strategy deck and disappear. We work alongside your leadership and teams to build a strategy your people can own, execute, and evolve — long after our engagement ends.</p>
         </div>
         <div class="about-right reveal">
@@ -263,7 +263,7 @@
   <!-- ===== WHY AGENTGRID ===== -->
   <section class="why section" id="why">
     <div class="container">
-      <div class="section-label reveal">Why AgentGrid</div>
+      <div class="section-label reveal">Why Velloris</div>
       <h2 class="section-heading reveal-text">What Makes Us<br/><span class="grad-text">Different</span></h2>
       <div class="why-grid">
         <div class="why-item reveal-up">
@@ -297,7 +297,7 @@
       <div class="team-grid">
         <div class="team-photo-col reveal-up">
           <div class="team-photo-wrap">
-            <img src="assets/shlomi.jpg" alt="Shlomi Otmazgin — Founder, AgentGrid" />
+            <img src="assets/shlomi.jpg" alt="Shlomi Otmazgin — Founder, Velloris" />
             <div class="team-photo-glow"></div>
           </div>
           <a href="https://www.linkedin.com/in/shlomiot/" target="_blank" rel="noopener noreferrer" class="linkedin-btn">
@@ -306,7 +306,7 @@
           </a>
         </div>
         <div class="team-bio">
-          <h2 class="reveal-text">Shlomi Otmazgin<br/><span class="grad-text">Founder, AgentGrid</span></h2>
+          <h2 class="reveal-text">Shlomi Otmazgin<br/><span class="grad-text">Founder, Velloris</span></h2>
           <p class="reveal">With over 20 years leading R&D organizations — from early-stage startups to global enterprises — Shlomi has operated at every level of the engineering and product stack.</p>
           <p class="reveal">As CTO of Yad2, he built and scaled a 100+ engineer organization from the ground up, pioneered AI-native workflows by deploying autonomous agents and Copilots across the entire SDLC, and played a pivotal role in the company's €950M acquisition by Apax Partners.</p>
           <div class="team-career reveal">
@@ -328,7 +328,7 @@
             </div>
           </div>
           <blockquote class="team-quote reveal">
-            "AgentGrid was founded on one belief: the companies that win the AI transition won't be the ones with the most tools — they'll be the ones with the clearest strategy."
+            "Velloris was founded on one belief: the companies that win the AI transition won't be the ones with the most tools — they'll be the ones with the clearest strategy."
           </blockquote>
         </div>
       </div>
@@ -388,30 +388,28 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="#" class="nav-logo">
-            <svg width="200" height="40" viewBox="0 0 260 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="230" height="44" viewBox="0 0 256 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <filter id="glow-pulse-footer" x="-100%" y="-100%" width="300%" height="300%">
-                  <feGaussianBlur stdDeviation="4.5" result="blur"/>
-                  <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                <linearGradient id="gr-footer" x1="148" y1="0" x2="188" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#38bdf8"/><stop offset="1" stop-color="#a855f7"/>
+                </linearGradient>
+                <filter id="glow-footer" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="3.5" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
-                <path id="small-orbit-footer" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+                <path id="small-orbit-footer" d="M 40,25 A 18,7,0,1,0,4,25 A 18,7,0,1,0,40,25"/>
               </defs>
-              <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
-              <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
-              <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/>
-              <circle cx="22" cy="26" r="1.3" fill="#fff"/>
-              <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
-              <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#small-orbit-footer"/></animateMotion></circle></g>
-              <text font-family="'Inter',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5">
-                <tspan x="50" y="36" fill="#38bdf8">a</tspan><tspan fill="#ffffff">gentgr</tspan><tspan fill="#38bdf8">i</tspan><tspan fill="#ffffff">d</tspan>
+              <ellipse cx="22" cy="25" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+              <ellipse cx="22" cy="25" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 25)"/>
+              <circle cx="22" cy="25" r="2.6" fill="#38bdf8"/><circle cx="22" cy="25" r="1.3" fill="#fff"/>
+              <g><circle cx="22" cy="7" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 25" to="360 22 25" dur="4s" repeatCount="indefinite"/></circle></g>
+              <g transform="rotate(-28 22 25)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#small-orbit-footer"/></animateMotion></circle></g>
+              <text font-family="'Inter',system-ui,sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5">
+                <tspan x="48" y="34" fill="#ffffff">velloris</tspan><tspan fill="url(#gr-footer)">.ai</tspan>
               </text>
-              <text x="50" y="36" font-family="'Inter',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#00d4ff" filter="url(#glow-pulse-footer)" opacity="0">
-                <animate attributeName="opacity" values="0;0;0;0.95;1;0.95;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
-                a
-              </text>
-              <text x="50" y="36" font-family="'Inter',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" filter="url(#glow-pulse-footer)" opacity="0">
-                <animate attributeName="opacity" values="0;0;0;0.95;1;0.95;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
-                <tspan fill-opacity="0">agentgr</tspan><tspan fill="#00d4ff">i</tspan>
+              <text x="48" y="34" font-family="'Inter',system-ui,sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5" filter="url(#glow-footer)" opacity="0">
+                <animate attributeName="opacity" values="0;0;0;0.9;1;0.9;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="4s" repeatCount="indefinite"/>
+                <tspan fill-opacity="0">velloris</tspan><tspan fill="url(#gr-footer)">.ai</tspan>
               </text>
             </svg>
           </a>
@@ -433,12 +431,12 @@
           <div class="footer-col">
             <h4>Connect</h4>
             <a href="https://www.linkedin.com/in/shlomiot/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="mailto:hello@agentgrid.ai">hello@agentgrid.ai</a>
+            <a href="mailto:hello@velloris.ai">hello@velloris.ai</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 AgentGrid. All rights reserved.</span>
+        <span>© 2025 Velloris. All rights reserved.</span>
         <a href="https://www.linkedin.com/in/shlomiot/" target="_blank" rel="noopener" class="footer-li">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         </a>

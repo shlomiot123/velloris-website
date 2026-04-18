@@ -287,8 +287,8 @@ function initForm() {
 
     const data = new FormData(form);
     data.append('access_key', '358ed785-0ccc-4750-b47e-5d5a5c6bea48');
-    data.append('subject',    'New contact from AgentGrid');
-    data.append('from_name',  'AgentGrid Website');
+    data.append('subject',    'New contact from Velloris');
+    data.append('from_name',  'Velloris Website');
 
     try {
       const res  = await fetch('https://api.web3forms.com/submit', {

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: agentgrid-website
+    name: velloris-website
     runtime: static
     staticPublishPath: .
     pullRequestPreviewsEnabled: false
