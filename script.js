@@ -73,7 +73,7 @@ function updateActiveLink() {
 
 function var_navH() { return 80; }
 
-/* ---- 4. HERO PARTICLE CANVAS ---- */
+/* ---- 4. HERO PARTICLE CANVAS (disabled) ---- */
 class ParticleCanvas {
   constructor(canvas) {
     this.canvas  = canvas;
@@ -343,10 +343,6 @@ function onScroll() {
 
 /* ---- INIT ---- */
 document.addEventListener('DOMContentLoaded', () => {
-  // Particle canvas (hero only)
-  const canvas = document.getElementById('heroCanvas');
-  if (canvas) new ParticleCanvas(canvas);
-
   revealHero();
   initReveal();
   initCounters();
