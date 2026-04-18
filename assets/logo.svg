@@ -1,0 +1,39 @@
+<svg width="240" height="48" viewBox="0 0 240 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Orbital rings -->
+  <ellipse cx="22" cy="24" rx="18" ry="18" stroke="#6366f1" stroke-width="1" opacity="0.5"/>
+  <ellipse cx="22" cy="24" rx="18" ry="8" stroke="#a855f7" stroke-width="0.8" opacity="0.4" transform="rotate(-25 22 24)"/>
+  <ellipse cx="22" cy="24" rx="10" ry="18" stroke="#4f9ff0" stroke-width="0.8" opacity="0.3" transform="rotate(20 22 24)"/>
+
+  <!-- Nucleus -->
+  <circle cx="22" cy="24" r="3" fill="#4f9ff0"/>
+  <circle cx="22" cy="24" r="1.5" fill="#ffffff"/>
+
+  <!-- Orbiting dots -->
+  <g>
+    <circle cx="22" cy="6" r="2.2" fill="#6366f1">
+      <animateTransform attributeName="transform" type="rotate" from="0 22 24" to="360 22 24" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <g>
+    <circle cx="40" cy="24" r="1.8" fill="#a855f7">
+      <animateTransform attributeName="transform" type="rotate" from="0 22 24" to="-360 22 24" dur="6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <g>
+    <circle cx="22" cy="42" r="1.4" fill="#4f9ff0">
+      <animateTransform attributeName="transform" type="rotate" from="180 22 24" to="540 22 24" dur="5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Text: "agentgrid" with a and i colored -->
+  <text font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" letter-spacing="-1">
+    <!-- a — blue -->
+    <tspan x="50" y="32" fill="#4f9ff0">a</tspan>
+    <!-- gentgr — white -->
+    <tspan fill="#ffffff">gentgr</tspan>
+    <!-- i — purple -->
+    <tspan fill="#a855f7">i</tspan>
+    <!-- d — white -->
+    <tspan fill="#ffffff">d</tspan>
+  </text>
+</svg>

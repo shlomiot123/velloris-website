@@ -76,93 +76,96 @@ function var_navH() { return 80; }
 /* ---- 4. HERO PARTICLE CANVAS ---- */
 class ParticleCanvas {
   constructor(canvas) {
-    this.canvas = canvas;
-    this.ctx    = canvas.getContext('2d');
-    this.particles = [];
-    this.mouse  = { x: -9999, y: -9999 };
-    this.raf    = null;
+    this.canvas  = canvas;
+    this.ctx     = canvas.getContext('2d');
+    this.stars   = [];
+    this.W = this.H = this.cx = this.cy = 0;
+
+    const STAR_COLORS = [
+      [255,255,255],[255,255,255],[255,255,255],
+      [200,220,255],[180,210,255],[140,190,255],[200,170,255],[56,189,248],
+    ];
+    this.STAR_COUNT = 180;
+    this.SPEED      = 0.4;
+    this.FOV        = 300;
+    this.COLORS     = STAR_COLORS;
+
     this.resize();
-    this.createParticles();
-    window.addEventListener('resize', () => { this.resize(); this.createParticles(); });
-    document.addEventListener('mousemove', e => {
-      const rect = this.canvas.getBoundingClientRect();
-      this.mouse.x = e.clientX - rect.left;
-      this.mouse.y = e.clientY - rect.top;
-    });
+    window.addEventListener('resize', () => this.resize());
     this.animate();
   }
 
-  resize() {
-    this.canvas.width  = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+  makeStar() {
+    const col = this.COLORS[Math.floor(Math.random() * this.COLORS.length)];
+    return {
+      x:    (Math.random() - 0.5) * this.W * 2,
+      y:    (Math.random() - 0.5) * this.H * 2,
+      z:    Math.random() * this.W,
+      pz:   0,
+      col,
+      size: 0.4 + Math.random() * 1.2,
+    };
   }
 
-  createParticles() {
-    const area  = this.canvas.width * this.canvas.height;
-    const count = Math.floor(area / 14000);
-    this.particles = [];
-    for (let i = 0; i < count; i++) {
-      this.particles.push({
-        x:  Math.random() * this.canvas.width,
-        y:  Math.random() * this.canvas.height,
-        vx: (Math.random() - 0.5) * 0.28,
-        vy: (Math.random() - 0.5) * 0.28,
-        r:  Math.random() * 1.4 + 0.5,
-        a:  Math.random() * 0.45 + 0.15,
-      });
-    }
+  resize() {
+    this.W  = this.canvas.width  = window.innerWidth;
+    this.H  = this.canvas.height = window.innerHeight;
+    this.cx = this.W / 2;
+    this.cy = this.H / 2;
+    this.stars = Array.from({ length: this.STAR_COUNT }, () => {
+      const s = this.makeStar();
+      s.pz = s.z;
+      return s;
+    });
   }
 
   animate() {
-    const { ctx, canvas, particles, mouse } = this;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const { ctx, W, H, cx, cy, stars, FOV, SPEED } = this;
 
-    particles.forEach(p => {
-      // Mouse repel
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 140) {
-        const f = (140 - dist) / 140;
-        p.x += dx * f * 0.022;
-        p.y += dy * f * 0.022;
+    ctx.fillStyle = 'rgba(5,5,16,0.25)';
+    ctx.fillRect(0, 0, W, H);
+
+    stars.forEach(s => {
+      s.pz = s.z;
+      s.z -= SPEED;
+      if (s.z <= 1) { Object.assign(s, this.makeStar()); s.z = W; s.pz = W; return; }
+
+      const sx = (s.x / s.z) * FOV + cx;
+      const sy = (s.y / s.z) * FOV + cy;
+      if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) return;
+
+      const px    = (s.x / s.pz) * FOV + cx;
+      const py    = (s.y / s.pz) * FOV + cy;
+      const depth = 1 - s.z / W;
+      const alpha = Math.min(1, depth * 1.4 + 0.05);
+      const r     = Math.max(0.15, depth * s.size * 2.2);
+      const [cr, cg, cb] = s.col;
+
+      const trailLen = Math.hypot(sx - px, sy - py);
+      if (trailLen > 0.5) {
+        const grad = ctx.createLinearGradient(px, py, sx, sy);
+        grad.addColorStop(0, `rgba(${cr},${cg},${cb},0)`);
+        grad.addColorStop(1, `rgba(${cr},${cg},${cb},${alpha * 0.6})`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth   = r * 0.8;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(sx, sy); ctx.stroke();
       }
-
-      p.x += p.vx;
-      p.y += p.vy;
-
-      // Wrap
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width)  p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
 
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(99,102,241,${p.a})`;
+      ctx.arc(sx, sy, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
       ctx.fill();
+
+      if (depth > 0.7 && r > 1) {
+        const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r * 5);
+        g.addColorStop(0, `rgba(${cr},${cg},${cb},${alpha * 0.25})`);
+        g.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(sx, sy, r * 5, 0, Math.PI * 2); ctx.fill();
+      }
     });
 
-    // Connections
-    const maxDist = 110;
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < maxDist) {
-          const alpha = ((maxDist - d) / maxDist) * 0.12;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(99,102,241,${alpha})`;
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
-      }
-    }
-
-    this.raf = requestAnimationFrame(() => this.animate());
+    requestAnimationFrame(() => this.animate());
   }
 }
 
@@ -277,17 +280,32 @@ function initForm() {
   const btn     = document.getElementById('formSubmit');
   const success = document.getElementById('formSuccess');
 
-  form?.addEventListener('submit', e => {
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
     btn.disabled = true;
     btn.querySelector('.btn-text').textContent = 'Sending...';
 
-    // Simulate async
-    setTimeout(() => {
-      form.reset();
-      btn.style.display = 'none';
-      success.classList.add('show');
-    }, 1200);
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch('https://formspree.io/f/xpzgeoqk', {
+        method:  'POST',
+        body:    data,
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (res.ok) {
+        form.reset();
+        btn.style.display = 'none';
+        success.classList.add('show');
+      } else {
+        btn.disabled = false;
+        btn.querySelector('.btn-text').textContent = 'Try Again';
+      }
+    } catch {
+      btn.disabled = false;
+      btn.querySelector('.btn-text').textContent = 'Try Again';
+    }
   });
 }
 
