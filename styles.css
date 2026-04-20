@@ -169,9 +169,10 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   pointer-events: none;
   z-index: 0;
 }
+.about, .serve, .process, .why,
 .services, .team, .contact { position: relative; overflow: hidden; }
-.services .container,
-.team .container,
+.about .container, .serve .container, .process .container, .why .container,
+.services .container, .team .container,
 .contact .container    { position: relative; z-index: 1; }
 
 /* ---- SCROLL BAR ---- */
@@ -462,46 +463,6 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   flex-shrink: 0;
 }
 
-/* Hero scroll hint */
-.hero-scroll {
-  position: absolute;
-  bottom: 36px;
-  left: clamp(20px, 5vw, 60px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeIn 0.6s var(--smooth) 1.9s forwards;
-}
-.hero-scroll-line {
-  width: 1px;
-  height: 44px;
-  background: rgba(255,255,255,0.15);
-  position: relative;
-  overflow: hidden;
-}
-.hero-scroll-line::after {
-  content: '';
-  position: absolute;
-  top: -100%; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(255,255,255,0.6);
-  animation: scrollPulse 2s ease-in-out 2s infinite;
-}
-@keyframes scrollPulse {
-  0%   { top: -100%; }
-  100% { top: 200%; }
-}
-.hero-scroll span {
-  font-size: 10px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
-}
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }

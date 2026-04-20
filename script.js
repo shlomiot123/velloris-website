@@ -12,12 +12,27 @@
   let W, H, t = 0, fadeIn = 0;
   let mx = -9999, my = -9999, smx = -9999, smy = -9999;
   let mouseStrength = 0, mouseIdleFrames = 0;
+  let clipTop = null, clipBot = null;
 
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
     W = canvas.width  = rect.width;
     H = canvas.height = rect.height;
     smx = W / 2; smy = H / 2;
+
+    if (W <= 768) {
+      const lastWrap = document.querySelector('.hero-heading .line-wrap:last-child');
+      if (lastWrap) {
+        const lineRect   = lastWrap.getBoundingClientRect();
+        const canvasRect = canvas.getBoundingClientRect();
+        const pad = 44;
+        clipTop = lineRect.top  - canvasRect.top  - pad;
+        clipBot = lineRect.bottom - canvasRect.top + pad;
+      }
+    } else {
+      clipTop = null;
+      clipBot = null;
+    }
   }
   resize();
   window.addEventListener('resize', resize);
@@ -107,9 +122,20 @@
     mouseStrength = mouseIdleFrames > 120
       ? Math.max(0, mouseStrength - 0.02)
       : Math.min(1, mouseStrength + 0.04);
+
+    if (clipTop !== null) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, clipTop, W, clipBot - clipTop);
+      ctx.clip();
+    }
+
     drawBg(fadeIn);
     drawAura(mouseStrength * fadeIn);
     for (const wv of waves) drawWave(wv, fadeIn, mouseStrength);
+
+    if (clipTop !== null) ctx.restore();
+
     t++;
     requestAnimationFrame(draw);
   }
@@ -121,17 +147,26 @@
   const canvases = document.querySelectorAll('.section-wave');
   if (!canvases.length) return;
 
-  // shared layer definitions — each canvas gets a random phase offset so they differ
-  const LAYERS = [
-    { y:0.22, amp:35, freq:0.0042, spd:0.004, ph:0.0,  r:99,  g:102, b:241, a:0.10, w:0.9 },
-    { y:0.36, amp:26, freq:0.0068, spd:0.006, ph:1.6,  r:168, g:85,  b:247, a:0.12, w:0.8 },
-    { y:0.50, amp:30, freq:0.0055, spd:0.005, ph:3.0,  r:56,  g:189, b:248, a:0.09, w:0.7 },
-    { y:0.64, amp:22, freq:0.0078, spd:0.007, ph:4.4,  r:99,  g:102, b:241, a:0.11, w:0.8 },
-    { y:0.78, amp:40, freq:0.0035, spd:0.003, ph:2.2,  r:140, g:100, b:255, a:0.07, w:1.0 },
+  const LAYERS_DARK = [
+    { y:0.20, amp:38, freq:0.0040, spd:0.004, ph:0.0,  r:99,  g:102, b:241, a:0.18, w:1.2 },
+    { y:0.38, amp:28, freq:0.0065, spd:0.006, ph:1.6,  r:168, g:85,  b:247, a:0.20, w:1.0 },
+    { y:0.54, amp:32, freq:0.0052, spd:0.005, ph:3.0,  r:56,  g:189, b:248, a:0.15, w:0.9 },
+    { y:0.68, amp:24, freq:0.0076, spd:0.007, ph:4.4,  r:99,  g:102, b:241, a:0.18, w:1.0 },
+    { y:0.82, amp:42, freq:0.0034, spd:0.003, ph:2.2,  r:140, g:100, b:255, a:0.13, w:1.3 },
+  ];
+
+  const LAYERS_LIGHT = [
+    { y:0.18, amp:32, freq:0.0038, spd:0.003, ph:0.8,  r:99,  g:102, b:241, a:0.10, w:1.4 },
+    { y:0.36, amp:24, freq:0.0062, spd:0.005, ph:2.2,  r:168, g:85,  b:247, a:0.08, w:1.1 },
+    { y:0.56, amp:28, freq:0.0050, spd:0.004, ph:4.0,  r:99,  g:102, b:241, a:0.09, w:1.2 },
+    { y:0.74, amp:20, freq:0.0072, spd:0.006, ph:1.0,  r:140, g:100, b:255, a:0.07, w:1.0 },
+    { y:0.88, amp:36, freq:0.0032, spd:0.003, ph:3.4,  r:168, g:85,  b:247, a:0.08, w:1.3 },
   ];
 
   canvases.forEach(canvas => {
-    const ctx = canvas.getContext('2d');
+    const ctx    = canvas.getContext('2d');
+    const isDark = canvas.parentElement.classList.contains('dark-section');
+    const LAYERS = isDark ? LAYERS_DARK : LAYERS_LIGHT;
     let W, H, t = 0, active = false;
     const seed = Math.random() * Math.PI * 6;
 
