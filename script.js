@@ -116,7 +116,76 @@
   draw();
 })();
 
-/* ---- 2. SCROLL PROGRESS BAR ---- */
+/* ---- 2. SECTION WAVE BACKGROUNDS ---- */
+(function () {
+  const canvases = document.querySelectorAll('.section-wave');
+  if (!canvases.length) return;
+
+  // shared layer definitions — each canvas gets a random phase offset so they differ
+  const LAYERS = [
+    { y:0.22, amp:35, freq:0.0042, spd:0.004, ph:0.0,  r:99,  g:102, b:241, a:0.10, w:0.9 },
+    { y:0.36, amp:26, freq:0.0068, spd:0.006, ph:1.6,  r:168, g:85,  b:247, a:0.12, w:0.8 },
+    { y:0.50, amp:30, freq:0.0055, spd:0.005, ph:3.0,  r:56,  g:189, b:248, a:0.09, w:0.7 },
+    { y:0.64, amp:22, freq:0.0078, spd:0.007, ph:4.4,  r:99,  g:102, b:241, a:0.11, w:0.8 },
+    { y:0.78, amp:40, freq:0.0035, spd:0.003, ph:2.2,  r:140, g:100, b:255, a:0.07, w:1.0 },
+  ];
+
+  canvases.forEach(canvas => {
+    const ctx = canvas.getContext('2d');
+    let W, H, t = 0, active = false;
+    const seed = Math.random() * Math.PI * 6;
+
+    function resize() {
+      const p = canvas.parentElement;
+      W = canvas.width  = p.offsetWidth;
+      H = canvas.height = p.offsetHeight;
+    }
+
+    function tick() {
+      if (!active) return;
+      ctx.clearRect(0, 0, W, H);
+
+      for (const l of LAYERS) {
+        const grad = ctx.createLinearGradient(0, 0, W, 0);
+        grad.addColorStop(0,    `rgba(${l.r},${l.g},${l.b},0)`);
+        grad.addColorStop(0.1,  `rgba(${l.r},${l.g},${l.b},${l.a})`);
+        grad.addColorStop(0.9,  `rgba(${l.r},${l.g},${l.b},${l.a})`);
+        grad.addColorStop(1,    `rgba(${l.r},${l.g},${l.b},0)`);
+
+        ctx.beginPath();
+        const baseY = H * l.y;
+        for (let x = 0; x <= W; x += 3) {
+          const y = baseY + Math.sin(l.freq * x + l.ph + seed + t * l.spd) * l.amp;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = grad;
+        ctx.lineWidth   = l.w;
+        ctx.stroke();
+      }
+
+      t++;
+      requestAnimationFrame(tick);
+    }
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !active) {
+          active = true;
+          resize();
+          tick();
+        } else if (!e.isIntersecting) {
+          active = false;
+        }
+      });
+    }, { threshold: 0.05 });
+
+    resize();
+    window.addEventListener('resize', () => { if (active) resize(); });
+    io.observe(canvas.parentElement);
+  });
+})();
+
+/* ---- 3. SCROLL PROGRESS BAR ---- */
 const scrollBar = document.getElementById('scrollBar');
 
 function updateScrollBar() {

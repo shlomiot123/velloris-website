@@ -161,8 +161,38 @@
     </div>
   </section>
 
+  <!-- wave divider: light → dark -->
+  <div class="wave-sep wave-sep--to-dark" aria-hidden="true">
+    <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sepg1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#6366f1" stop-opacity="0"/>
+          <stop offset="20%"  stop-color="#6366f1" stop-opacity="0.35"/>
+          <stop offset="55%"  stop-color="#a855f7" stop-opacity="0.4"/>
+          <stop offset="80%"  stop-color="#38bdf8" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="sepg2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#a855f7" stop-opacity="0"/>
+          <stop offset="30%"  stop-color="#38bdf8" stop-opacity="0.2"/>
+          <stop offset="70%"  stop-color="#6366f1" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path fill="none" stroke="url(#sepg1)" stroke-width="1.2">
+        <animate attributeName="d" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+          values="M0,32 C240,20 480,44 720,32 C960,20 1200,44 1440,32;M0,32 C240,44 480,20 720,32 C960,44 1200,20 1440,32;M0,32 C240,20 480,44 720,32 C960,20 1200,44 1440,32"/>
+      </path>
+      <path fill="none" stroke="url(#sepg2)" stroke-width="0.8">
+        <animate attributeName="d" dur="13s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+          values="M0,38 C320,26 640,50 960,36 C1120,30 1320,46 1440,38;M0,38 C320,50 640,26 960,40 C1120,50 1320,28 1440,38;M0,38 C320,26 640,50 960,36 C1120,30 1320,46 1440,38"/>
+      </path>
+    </svg>
+  </div>
+
   <!-- ===== SERVICES ===== -->
   <section class="services section dark-section" id="services">
+    <canvas class="section-wave"></canvas>
     <div class="container">
       <div class="section-label reveal">Services</div>
       <h2 class="section-heading reveal-text">Everything You Need<br/>To <span class="grad-text">Lead AI</span></h2>
@@ -289,8 +319,37 @@
     </div>
   </section>
 
+  <!-- wave divider: light → dark -->
+  <div class="wave-sep wave-sep--to-dark" aria-hidden="true">
+    <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sepg3" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#6366f1" stop-opacity="0"/>
+          <stop offset="25%"  stop-color="#a855f7" stop-opacity="0.3"/>
+          <stop offset="60%"  stop-color="#38bdf8" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="sepg4" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#38bdf8" stop-opacity="0"/>
+          <stop offset="35%"  stop-color="#6366f1" stop-opacity="0.2"/>
+          <stop offset="75%"  stop-color="#a855f7" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path fill="none" stroke="url(#sepg3)" stroke-width="1.2">
+        <animate attributeName="d" dur="11s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+          values="M0,28 C200,16 500,42 800,28 C1050,18 1280,40 1440,28;M0,28 C200,40 500,16 800,30 C1050,42 1280,18 1440,28;M0,28 C200,16 500,42 800,28 C1050,18 1280,40 1440,28"/>
+      </path>
+      <path fill="none" stroke="url(#sepg4)" stroke-width="0.8">
+        <animate attributeName="d" dur="16s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+          values="M0,40 C360,28 720,52 1080,38 C1240,32 1380,46 1440,40;M0,40 C360,52 720,28 1080,42 C1240,52 1380,30 1440,40;M0,40 C360,28 720,52 1080,38 C1240,32 1380,46 1440,40"/>
+      </path>
+    </svg>
+  </div>
+
   <!-- ===== TEAM ===== -->
   <section class="team section dark-section" id="team">
+    <canvas class="section-wave"></canvas>
     <div class="container">
       <div class="section-label reveal">The Team</div>
       <div class="team-grid">
@@ -336,6 +395,7 @@
 
   <!-- ===== CONTACT ===== -->
   <section class="contact section dark-section" id="contact">
+    <canvas class="section-wave"></canvas>
     <div class="container">
       <div class="contact-inner">
         <div class="contact-text">

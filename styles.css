@@ -146,6 +146,34 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
 }
 
 
+/* ---- WAVE SEPARATOR ---- */
+.wave-sep {
+  position: relative;
+  height: 56px;
+  overflow: hidden;
+  pointer-events: none;
+  margin-bottom: -1px;
+}
+.wave-sep--to-dark { background: var(--off); }
+.wave-sep svg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+}
+
+/* ---- SECTION WAVE CANVAS ---- */
+.section-wave {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.services, .team, .contact { position: relative; overflow: hidden; }
+.services .container,
+.team .container,
+.contact .container    { position: relative; z-index: 1; }
+
 /* ---- SCROLL BAR ---- */
 .scroll-bar {
   position: fixed;
