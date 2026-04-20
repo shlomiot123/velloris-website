@@ -145,31 +145,6 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   font-size: clamp(16px, 1.3vw, 18px);
 }
 
-/* ---- CURSOR ---- */
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.cursor-dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  transition: transform 0.08s var(--ease), opacity 0.3s;
-}
-.cursor-ring {
-  width: 38px; height: 38px;
-  border: 1.5px solid rgba(99,102,241,0.5);
-  transition: transform 0.14s var(--ease-out), width 0.28s var(--spring), height 0.28s var(--spring), opacity 0.3s, border-color 0.28s;
-}
-.cursor-grow .cursor-ring {
-  width: 56px; height: 56px;
-  border-color: rgba(99,102,241,0.8);
-}
-.cursor-grow .cursor-dot { transform: translate(-50%,-50%) scale(0); }
 
 /* ---- SCROLL BAR ---- */
 .scroll-bar {
@@ -984,8 +959,8 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   .team-career { margin: 20px 0; }
 
   .form-row { grid-template-columns: 1fr; }
-  .cursor-dot, .cursor-ring { display: none; }
 }
+
 
 @media (max-width: 480px) {
   :root { --pad: 44px; }

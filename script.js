@@ -4,41 +4,117 @@
 
 'use strict';
 
-/* ---- 1. CUSTOM CURSOR ---- */
-const cursorDot  = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
+/* ---- 1. HERO WAVE ANIMATION ---- */
+(function () {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0, fadeIn = 0;
+  let mx = -9999, my = -9999, smx = -9999, smy = -9999;
+  let mouseStrength = 0, mouseIdleFrames = 0;
 
-let mouseX = 0, mouseY = 0;
-let ringX  = 0, ringY  = 0;
-let hasMoved = false;
-
-function moveCursor(e) {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  if (!hasMoved) {
-    hasMoved = true;
-    document.body.classList.add('has-cursor');
-    ringX = mouseX; ringY = mouseY;
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width  = rect.width;
+    H = canvas.height = rect.height;
+    smx = W / 2; smy = H / 2;
   }
-  cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%,-50%)`;
-}
+  resize();
+  window.addEventListener('resize', resize);
 
-function animateRing() {
-  ringX += (mouseX - ringX) * 0.14;
-  ringY += (mouseY - ringY) * 0.14;
-  cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
-  requestAnimationFrame(animateRing);
-}
-
-if (window.matchMedia('(pointer: fine)').matches) {
-  document.addEventListener('mousemove', moveCursor);
-  animateRing();
-
-  document.querySelectorAll('a, button, .serve-card, .svc-card, .why-item, .process-step').forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
+  window.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mx = e.clientX - rect.left;
+    my = e.clientY - rect.top;
+    mouseIdleFrames = 0;
   });
-}
+
+  const waves = [
+    { y:0.50, amp:60, freq:0.0030, spd:0.003, ph:0.0,  r:99,  g:102, b:241, a:0.08, w:40,  blur:60, bc:[80,60,220]   },
+    { y:0.52, amp:50, freq:0.0025, spd:0.002, ph:1.2,  r:168, g:85,  b:247, a:0.06, w:35,  blur:55, bc:[140,50,200]  },
+    { y:0.44, amp:34, freq:0.0060, spd:0.008, ph:0.5,  r:99,  g:102, b:241, a:0.18, w:8,   blur:22, bc:[99,102,241]  },
+    { y:0.47, amp:28, freq:0.0075, spd:0.010, ph:1.8,  r:168, g:85,  b:247, a:0.22, w:7,   blur:20, bc:[168,85,247]  },
+    { y:0.53, amp:26, freq:0.0065, spd:0.007, ph:3.1,  r:56,  g:189, b:248, a:0.16, w:6,   blur:18, bc:[56,189,248]  },
+    { y:0.57, amp:32, freq:0.0055, spd:0.009, ph:4.4,  r:59,  g:130, b:246, a:0.18, w:7,   blur:20, bc:[59,130,246]  },
+    { y:0.43, amp:30, freq:0.0080, spd:0.012, ph:0.2,  r:140, g:100, b:255, a:0.70, w:1.5, blur:8,  bc:[140,100,255] },
+    { y:0.46, amp:24, freq:0.0095, spd:0.009, ph:2.3,  r:168, g:85,  b:247, a:0.80, w:1.2, blur:6,  bc:[168,85,247]  },
+    { y:0.50, amp:20, freq:0.0070, spd:0.014, ph:1.1,  r:56,  g:189, b:248, a:0.65, w:1.0, blur:7,  bc:[56,189,248]  },
+    { y:0.54, amp:26, freq:0.0085, spd:0.011, ph:3.7,  r:99,  g:102, b:241, a:0.75, w:1.3, blur:8,  bc:[99,102,241]  },
+    { y:0.58, amp:22, freq:0.0060, spd:0.008, ph:5.0,  r:59,  g:130, b:246, a:0.60, w:1.0, blur:6,  bc:[59,130,246]  },
+    { y:0.48, amp:22, freq:0.0100, spd:0.016, ph:0.8,  r:200, g:150, b:255, a:0.90, w:1.0, blur:12, bc:[200,150,255] },
+    { y:0.52, amp:18, freq:0.0090, spd:0.013, ph:2.9,  r:100, g:200, b:255, a:0.85, w:0.9, blur:10, bc:[100,200,255] },
+    { y:0.38, amp:45, freq:0.0040, spd:0.004, ph:0.6,  r:80,  g:60,  b:200, a:0.05, w:50,  blur:70, bc:[60,40,180]   },
+    { y:0.62, amp:40, freq:0.0035, spd:0.003, ph:2.0,  r:120, g:40,  b:180, a:0.05, w:45,  blur:65, bc:[100,30,160]  },
+  ];
+
+  const SIGMA = 240, PULL = 0.22, S2 = 2 * SIGMA * SIGMA;
+
+  function drawWave(wv, alpha, ms) {
+    ctx.save();
+    ctx.shadowColor = `rgb(${wv.bc[0]},${wv.bc[1]},${wv.bc[2]})`;
+    ctx.shadowBlur  = wv.blur;
+    const a    = wv.a * alpha;
+    const grad = ctx.createLinearGradient(0, 0, W, 0);
+    grad.addColorStop(0.00, `rgba(${wv.r},${wv.g},${wv.b},0)`);
+    grad.addColorStop(0.08, `rgba(${wv.r},${wv.g},${wv.b},${a})`);
+    grad.addColorStop(0.92, `rgba(${wv.r},${wv.g},${wv.b},${a})`);
+    grad.addColorStop(1.00, `rgba(${wv.r},${wv.g},${wv.b},0)`);
+    ctx.beginPath();
+    const baseY  = H * wv.y;
+    const breath = 1 + 0.12 * Math.sin(t * 0.004 + wv.ph * 0.7);
+    const amp    = wv.amp * breath;
+    for (let x = 0; x <= W; x += 2) {
+      const waveY = baseY + Math.sin(wv.freq * x + wv.ph + t * wv.spd) * amp;
+      const dx    = x - smx;
+      const bell  = ms * Math.exp(-(dx * dx) / S2);
+      const y     = waveY + (smy - waveY) * bell * PULL;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = grad;
+    ctx.lineWidth   = wv.w;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawBg(alpha) {
+    const cx = W * 0.5, cy = H * 0.5, r = Math.min(W, H) * 0.55;
+    const g  = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0,   `rgba(80,50,200,${0.10 * alpha})`);
+    g.addColorStop(0.5, `rgba(60,30,160,${0.06 * alpha})`);
+    g.addColorStop(1,   `rgba(5,5,16,0)`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function drawAura(ms) {
+    if (smx < 0 || ms < 0.01) return;
+    const g = ctx.createRadialGradient(smx, smy, 0, smx, smy, 180);
+    g.addColorStop(0,   `rgba(168,85,247,${0.13 * ms})`);
+    g.addColorStop(0.4, `rgba(99,102,241,${0.07 * ms})`);
+    g.addColorStop(1,   `rgba(99,102,241,0)`);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(smx, smy, 180, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    fadeIn = Math.min(1, t / 120);
+    smx += (mx - smx) * 0.06;
+    smy += (my - smy) * 0.06;
+    mouseIdleFrames++;
+    mouseStrength = mouseIdleFrames > 120
+      ? Math.max(0, mouseStrength - 0.02)
+      : Math.min(1, mouseStrength + 0.04);
+    drawBg(fadeIn);
+    drawAura(mouseStrength * fadeIn);
+    for (const wv of waves) drawWave(wv, fadeIn, mouseStrength);
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
 /* ---- 2. SCROLL PROGRESS BAR ---- */
 const scrollBar = document.getElementById('scrollBar');
