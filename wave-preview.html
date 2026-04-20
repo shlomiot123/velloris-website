@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wave Preview — Velloris</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #050510; font-family: 'Inter', sans-serif; }
+
+    canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 100vh; text-align: center;
+      padding: 0 40px;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(99,102,241,0.3);
+      padding: 8px 18px; border-radius: 100px;
+      margin-bottom: 40px;
+      background: rgba(99,102,241,0.08);
+      opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #6366f1;
+      box-shadow: 0 0 8px #6366f1;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    h1 {
+      font-size: clamp(40px, 5.8vw, 82px);
+      font-weight: 800; line-height: 1.08;
+      letter-spacing: -0.03em; color: #fff;
+      opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+    }
+    h1 .g {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #38bdf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(168,85,247,0.4));
+    }
+
+    .sub {
+      margin-top: 28px;
+      font-size: clamp(15px, 1.3vw, 18px);
+      line-height: 1.7; color: rgba(255,255,255,0.4);
+      max-width: 520px; font-weight: 300;
+      opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+    }
+
+    .ctas {
+      margin-top: 48px; display: flex; gap: 16px;
+      opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+    }
+    .btn-p {
+      padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 600;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #fff; cursor: pointer; border: none;
+      box-shadow: 0 0 32px rgba(99,102,241,0.4), 0 4px 16px rgba(0,0,0,0.3);
+      transition: box-shadow 0.3s;
+    }
+    .btn-p:hover { box-shadow: 0 0 48px rgba(168,85,247,0.6), 0 4px 20px rgba(0,0,0,0.4); }
+    .btn-o {
+      padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 500;
+      background: transparent; color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-o:hover { border-color: rgba(168,85,247,0.5); color: #fff; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .label {
+      position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="wc"></canvas>
+
+  <div class="hero-content">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      AI Strategy Advisory
+    </div>
+    <h1>
+      Re-Engineering the<br/>
+      <span class="g">Organization</span><br/>
+      for the Generative Era.
+    </h1>
+    <p class="sub">We help leadership teams build the strategy, structure, and clarity needed to lead their organizations through AI.</p>
+    <div class="ctas">
+      <button class="btn-p">Book a Discovery Call</button>
+      <button class="btn-o">See Our Services</button>
+    </div>
+  </div>
+
+  <div class="label">velloris.ai — wave animation preview</div>
+
+  <script>
+    const canvas = document.getElementById('wc');
+    const ctx = canvas.getContext('2d');
+    let W, H, t = 0, fadeIn = 0;
+
+    // mouse — raw and smoothed
+    let mx = -9999, my = -9999;
+    let smx = -9999, smy = -9999;
+    let mouseActive = false, mouseIdleFrames = 0;
+
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      mouseActive = true; mouseIdleFrames = 0;
+    });
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // ─── Wave definitions ───────────────────────────────────────────
+    // Each wave: baseline Y position, amplitude, frequency, phase speed,
+    // color [r,g,b], opacity, stroke width, glow color/radius
+    const waves = [
+
+      // ── BACKGROUND sweep — very wide, slow, near-invisible depth
+      { y: 0.50, amp: 60, freq: 0.0030, spd: 0.003, ph: 0.0,  r:99,  g:102, b:241, a:0.08, w:40,  blur:60, bc:[80,60,220]  },
+      { y: 0.52, amp: 50, freq: 0.0025, spd: 0.002, ph: 1.2,  r:168, g:85,  b:247, a:0.06, w:35,  blur:55, bc:[140,50,200] },
+
+      // ── MID glow bands — thicker, softer
+      { y: 0.44, amp: 34, freq: 0.0060, spd: 0.008, ph: 0.5,  r:99,  g:102, b:241, a:0.18, w:8,   blur:22, bc:[99,102,241] },
+      { y: 0.47, amp: 28, freq: 0.0075, spd: 0.010, ph: 1.8,  r:168, g:85,  b:247, a:0.22, w:7,   blur:20, bc:[168,85,247] },
+      { y: 0.53, amp: 26, freq: 0.0065, spd: 0.007, ph: 3.1,  r:56,  g:189, b:248, a:0.16, w:6,   blur:18, bc:[56,189,248] },
+      { y: 0.57, amp: 32, freq: 0.0055, spd: 0.009, ph: 4.4,  r:59,  g:130, b:246, a:0.18, w:7,   blur:20, bc:[59,130,246] },
+
+      // ── CRISP thin lines — sharp, bright, main visual
+      { y: 0.43, amp: 30, freq: 0.0080, spd: 0.012, ph: 0.2,  r:140, g:100, b:255, a:0.70, w:1.5, blur:8,  bc:[140,100,255] },
+      { y: 0.46, amp: 24, freq: 0.0095, spd: 0.009, ph: 2.3,  r:168, g:85,  b:247, a:0.80, w:1.2, blur:6,  bc:[168,85,247]  },
+      { y: 0.50, amp: 20, freq: 0.0070, spd: 0.014, ph: 1.1,  r:56,  g:189, b:248, a:0.65, w:1.0, blur:7,  bc:[56,189,248]  },
+      { y: 0.54, amp: 26, freq: 0.0085, spd: 0.011, ph: 3.7,  r:99,  g:102, b:241, a:0.75, w:1.3, blur:8,  bc:[99,102,241]  },
+      { y: 0.58, amp: 22, freq: 0.0060, spd: 0.008, ph: 5.0,  r:59,  g:130, b:246, a:0.60, w:1.0, blur:6,  bc:[59,130,246]  },
+
+      // ── ACCENT highlight — brightest, thinnest, most visible
+      { y: 0.48, amp: 22, freq: 0.0100, spd: 0.016, ph: 0.8,  r:200, g:150, b:255, a:0.90, w:1.0, blur:12, bc:[200,150,255] },
+      { y: 0.52, amp: 18, freq: 0.0090, spd: 0.013, ph: 2.9,  r:100, g:200, b:255, a:0.85, w:0.9, blur:10, bc:[100,200,255] },
+
+      // ── DEEP background halos
+      { y: 0.38, amp: 45, freq: 0.0040, spd: 0.004, ph: 0.6,  r:80,  g:60,  b:200, a:0.05, w:50,  blur:70, bc:[60,40,180]   },
+      { y: 0.62, amp: 40, freq: 0.0035, spd: 0.003, ph: 2.0,  r:120, g:40,  b:180, a:0.05, w:45,  blur:65, bc:[100,30,160]   },
+    ];
+
+    // ─── Mouse aura ─────────────────────────────────────────────────
+    function drawMouseAura(strength) {
+      if (smx < 0 || strength < 0.01) return;
+      const r = 180;
+      const g = ctx.createRadialGradient(smx, smy, 0, smx, smy, r);
+      g.addColorStop(0,   `rgba(168,85,247,${0.13 * strength})`);
+      g.addColorStop(0.4, `rgba(99,102,241,${0.07 * strength})`);
+      g.addColorStop(1,   `rgba(99,102,241,0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(smx, smy, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // ─── Draw a single wave path ────────────────────────────────────
+    const MOUSE_SIGMA  = 240;   // horizontal spread of mouse influence (px)
+    const MOUSE_PULL   = 0.22;  // how strongly the wave bends toward mouse Y (0–1)
+
+    function drawWave(wv, alpha, mouseStrength) {
+      ctx.save();
+
+      // glow
+      ctx.shadowColor  = `rgb(${wv.bc[0]},${wv.bc[1]},${wv.bc[2]})`;
+      ctx.shadowBlur   = wv.blur;
+
+      // horizontal fade gradient
+      const grad = ctx.createLinearGradient(0, 0, W, 0);
+      const a    = wv.a * alpha;
+      grad.addColorStop(0.00, `rgba(${wv.r},${wv.g},${wv.b},0)`);
+      grad.addColorStop(0.08, `rgba(${wv.r},${wv.g},${wv.b},${a})`);
+      grad.addColorStop(0.50, `rgba(${wv.r},${wv.g},${wv.b},${a})`);
+      grad.addColorStop(0.92, `rgba(${wv.r},${wv.g},${wv.b},${a})`);
+      grad.addColorStop(1.00, `rgba(${wv.r},${wv.g},${wv.b},0)`);
+
+      ctx.beginPath();
+      const baseY = H * wv.y;
+      const breath = 1 + 0.12 * Math.sin(t * 0.004 + wv.ph * 0.7);
+      const amp    = wv.amp * breath;
+      const s2     = 2 * MOUSE_SIGMA * MOUSE_SIGMA;
+
+      for (let x = 0; x <= W; x += 2) {
+        const waveY = baseY + Math.sin(wv.freq * x + wv.ph + t * wv.spd) * amp;
+
+        // gaussian pull toward mouse Y
+        const dx   = x - smx;
+        const bell = mouseStrength * Math.exp(-(dx * dx) / s2);
+        const y    = waveY + (smy - waveY) * bell * MOUSE_PULL;
+
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth   = wv.w;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ─── Subtle background radial glow pool ────────────────────────
+    function drawBg() {
+      const cx = W * 0.5, cy = H * 0.5;
+      const r  = Math.min(W, H) * 0.55;
+      const g  = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0,   `rgba(80,50,200,${0.10 * fadeIn})`);
+      g.addColorStop(0.5, `rgba(60,30,160,${0.06 * fadeIn})`);
+      g.addColorStop(1,   `rgba(5,5,16,0)`);
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    // ─── Main loop ─────────────────────────────────────────────────
+    let mouseStrength = 0; // smoothed 0→1 presence
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      fadeIn = Math.min(1, t / 120);
+
+      // smooth mouse position (lerp)
+      const ease = 0.06;
+      smx += (mx - smx) * ease;
+      smy += (my - smy) * ease;
+
+      // fade mouse influence in/out
+      if (mouseActive) {
+        mouseStrength = Math.min(1, mouseStrength + 0.04);
+        mouseIdleFrames++;
+        if (mouseIdleFrames > 120) mouseStrength = Math.max(0, mouseStrength - 0.02);
+      } else {
+        mouseStrength = Math.max(0, mouseStrength - 0.02);
+      }
+
+      drawBg();
+      drawMouseAura(mouseStrength * fadeIn);
+
+      for (const wv of waves) {
+        drawWave(wv, fadeIn, mouseStrength);
+      }
+
+      t++;
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #050510; font-family: 'Inter', sans-serif; }
+
+    .scene {
+      position: relative; width: 100vw; height: 100vh;
+      display: none; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .scene.active { display: flex; }
+
+    .label {
+      position: absolute; top: 28px; left: 36px;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .text-block { text-align: center; position: relative; z-index: 2; }
+    h1 { font-size: clamp(36px,5.5vw,72px); font-weight: 800; line-height: 1.1; letter-spacing: -2px; color: #fff; }
+    h1 .g { background: linear-gradient(135deg,#38bdf8,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    p { margin-top: 20px; font-size: 17px; color: rgba(255,255,255,0.45); }
+
+    .dots { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: background 0.3s; }
+    .dot.active { background: rgba(255,255,255,0.8); }
+
+    /* ═══════════════════════════
+       A — AURORA
+    ═══════════════════════════ */
+    .ab {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); will-change: transform;
+    }
+    .ab1 {
+      width: 70vw; height: 60vh;
+      background: radial-gradient(circle, rgba(99,102,241,0.55) 0%, transparent 70%);
+      top: -20%; left: -15%;
+      animation: da1 12s ease-in-out infinite;
+    }
+    .ab2 {
+      width: 60vw; height: 55vh;
+      background: radial-gradient(circle, rgba(168,85,247,0.45) 0%, transparent 70%);
+      bottom: -20%; right: -10%;
+      animation: da2 16s ease-in-out infinite;
+    }
+    .ab3 {
+      width: 40vw; height: 40vh;
+      background: radial-gradient(circle, rgba(56,189,248,0.35) 0%, transparent 70%);
+      top: 25%; right: 10%;
+      animation: da3 20s ease-in-out infinite;
+    }
+    @keyframes da1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,5vh) scale(1.1)} }
+    @keyframes da2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,-5vh) scale(1.12)} }
+    @keyframes da3 { 0%,100%{transform:translate(0,0) scale(1);opacity:.6} 50%{transform:translate(-5vw,-4vh) scale(1.15);opacity:1} }
+
+    /* ═══════════════════════════
+       B — SWEEP
+    ═══════════════════════════ */
+    .sweep-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 25% 55%, rgba(99,102,241,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 40% at 78% 38%, rgba(168,85,247,0.18) 0%, transparent 65%);
+    }
+    .sweep {
+      position: absolute;
+      top: 0; left: -50%; width: 40%; height: 100%;
+      background: linear-gradient(
+        108deg,
+        transparent 0%, transparent 38%,
+        rgba(180,210,255,0.08) 45%,
+        rgba(220,235,255,0.22) 50%,
+        rgba(180,210,255,0.08) 55%,
+        transparent 62%, transparent 100%
+      );
+      animation: swp 6s cubic-bezier(0.45,0,0.55,1) infinite;
+    }
+    .sweep2 {
+      position: absolute;
+      top: 0; left: -50%; width: 40%; height: 100%;
+      background: linear-gradient(
+        108deg,
+        transparent 0%, transparent 44%,
+        rgba(168,85,247,0.06) 48%,
+        rgba(200,160,255,0.14) 50%,
+        rgba(168,85,247,0.06) 52%,
+        transparent 56%, transparent 100%
+      );
+      animation: swp 6s cubic-bezier(0.45,0,0.55,1) 0.3s infinite;
+    }
+    @keyframes swp {
+      0%   { transform: translateX(0);    opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { transform: translateX(400%); opacity: 0; }
+    }
+
+    /* ═══════════════════════════
+       C — BREATHE
+    ═══════════════════════════ */
+    .breathe {
+      position: absolute; inset: 0;
+      animation: br 7s ease-in-out infinite;
+    }
+    @keyframes br {
+      0%,100% { background:
+        radial-gradient(ellipse 80% 60% at 15% 50%, rgba(99,102,241,0.30) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 55% at 85% 50%, rgba(168,85,247,0.22) 0%, transparent 60%),
+        #050510; }
+      50% { background:
+        radial-gradient(ellipse 90% 70% at 20% 45%, rgba(56,189,248,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 80% 55%, rgba(99,102,241,0.28) 0%, transparent 60%),
+        #050510; }
+    }
+    .hline {
+      position: absolute; left: 8%; right: 8%; height: 1px; top: 50%;
+      background: linear-gradient(90deg, transparent, rgba(120,140,255,0.6), rgba(180,100,255,0.6), transparent);
+      filter: blur(0.5px);
+      animation: hl 7s ease-in-out infinite;
+    }
+    @keyframes hl {
+      0%,100% { opacity: 0; transform: scaleX(0.2); }
+      40%,60% { opacity: 1; transform: scaleX(1); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- A -->
+<div class="scene active" id="a">
+  <div class="label">A — Aurora</div>
+  <div class="ab ab1"></div>
+  <div class="ab ab2"></div>
+  <div class="ab ab3"></div>
+  <div class="text-block">
+    <h1>Re-Engineering<br/>the Organization<br/><span class="g">for the Generative Era.</span></h1>
+    <p>We help leadership teams navigate AI transformation.</p>
+  </div>
+</div>
+
+<!-- B -->
+<div class="scene" id="b">
+  <div class="label">B — Light sweep</div>
+  <div class="sweep-bg"></div>
+  <div class="sweep"></div>
+  <div class="sweep2"></div>
+  <div class="text-block">
+    <h1>Re-Engineering<br/>the Organization<br/><span class="g">for the Generative Era.</span></h1>
+    <p>We help leadership teams navigate AI transformation.</p>
+  </div>
+</div>
+
+<!-- C -->
+<div class="scene" id="c">
+  <div class="label">C — Breathe</div>
+  <div class="breathe"></div>
+  <div class="hline"></div>
+  <div class="text-block">
+    <h1>Re-Engineering<br/>the Organization<br/><span class="g">for the Generative Era.</span></h1>
+    <p>We help leadership teams navigate AI transformation.</p>
+  </div>
+</div>
+
+<div class="dots">
+  <div class="dot active" onclick="show('a',0)">A</div>
+  <div class="dot" onclick="show('b',1)">B</div>
+  <div class="dot" onclick="show('c',2)">C</div>
+</div>
+
+<script>
+  const ids = ['a','b','c'];
+  const dots = document.querySelectorAll('.dot');
+  function show(id,i){
+    ids.forEach(s=>{document.getElementById(s).classList.remove('active')});
+    dots.forEach(d=>d.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    dots[i].classList.add('active');
+  }
+</script>
+</body>
+</html>

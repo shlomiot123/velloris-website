@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #050510; overflow: hidden; width: 100vw; height: 100vh; }
+    canvas { position: fixed; inset: 0; width: 100%; height: 100%; }
+    .content {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 800; line-height: 1.1; letter-spacing: -2px;
+      color: #fff; text-align: center;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, #38bdf8, #a855f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    p {
+      margin-top: 24px; font-family: 'Inter', sans-serif;
+      font-size: 18px; color: rgba(255,255,255,0.45);
+    }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="content">
+  <h1>Re-Engineering<br>the Organization<br><span class="grad">for the Generative Era.</span></h1>
+  <p>We help leadership teams navigate AI transformation.</p>
+</div>
+<script>
+const c   = document.getElementById('c');
+const ctx = c.getContext('2d');
+let W, H, cx, cy;
+
+const STAR_COUNT = 180;
+const SPEED      = 0.4;   // slow drift — increase for faster warp
+const FOV        = 300;
+
+const STAR_COLORS = [
+  [255, 255, 255],   // white       — most stars
+  [255, 255, 255],
+  [255, 255, 255],
+  [200, 220, 255],   // cool white
+  [180, 210, 255],   // pale blue
+  [140, 190, 255],   // blue
+  [200, 170, 255],   // pale purple
+  [ 56, 189, 248],   // sky cyan — rare
+];
+
+let stars = [];
+
+function makeStar() {
+  const col = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)];
+  return {
+    x:   (Math.random() - 0.5) * W * 2,
+    y:   (Math.random() - 0.5) * H * 2,
+    z:   Math.random() * W,
+    pz:  0,
+    col,
+    size: 0.4 + Math.random() * 1.2,   // base max size
+  };
+}
+
+function resize() {
+  W = c.width  = window.innerWidth;
+  H = c.height = window.innerHeight;
+  cx = W / 2;
+  cy = H / 2;
+  stars = Array.from({ length: STAR_COUNT }, makeStar);
+  // spread them out so they don't all appear from centre on load
+  stars.forEach(s => { s.pz = s.z; });
+}
+window.addEventListener('resize', resize);
+resize();
+
+function draw() {
+  // fade trail — dark semi-transparent fill creates the motion blur
+  ctx.fillStyle = 'rgba(5, 5, 16, 0.25)';
+  ctx.fillRect(0, 0, W, H);
+
+  stars.forEach(s => {
+    s.pz = s.z;
+    s.z -= SPEED;
+
+    // recycle star that passed the camera
+    if (s.z <= 1) {
+      Object.assign(s, makeStar());
+      s.z  = W;
+      s.pz = W;
+      return;
+    }
+
+    // project to screen
+    const sx = (s.x / s.z) * FOV + cx;
+    const sy = (s.y / s.z) * FOV + cy;
+
+    // cull if off screen
+    if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) return;
+
+    // previous projected position (for trail)
+    const px = (s.x / s.pz) * FOV + cx;
+    const py = (s.y / s.pz) * FOV + cy;
+
+    // depth-based brightness and size
+    const depth = 1 - s.z / W;           // 0 = far, 1 = close
+    const alpha = Math.min(1, depth * 1.4 + 0.05);
+    const r     = Math.max(0.15, depth * s.size * 2.2);
+
+    const [cr, cg, cb] = s.col;
+
+    // draw motion trail
+    const trailLen = Math.hypot(sx - px, sy - py);
+    if (trailLen > 0.5) {
+      const grad = ctx.createLinearGradient(px, py, sx, sy);
+      grad.addColorStop(0, `rgba(${cr},${cg},${cb},0)`);
+      grad.addColorStop(1, `rgba(${cr},${cg},${cb},${alpha * 0.6})`);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth   = r * 0.8;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(sx, sy);
+      ctx.stroke();
+    }
+
+    // draw star dot
+    ctx.beginPath();
+    ctx.arc(sx, sy, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
+    ctx.fill();
+
+    // subtle glow on close bright stars
+    if (depth > 0.7 && r > 1) {
+      const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r * 5);
+      g.addColorStop(0, `rgba(${cr},${cg},${cb},${alpha * 0.25})`);
+      g.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(sx, sy, r * 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

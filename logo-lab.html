@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #07070f; font-family: 'Inter', sans-serif; padding: 56px 72px; display: flex; flex-direction: column; gap: 40px; }
+    .row { display: flex; align-items: center; gap: 28px; }
+    .num { color: rgba(255,255,255,0.15); font-size: 11px; letter-spacing: 0.1em; width: 24px; flex-shrink: 0; }
+    .desc { color: rgba(255,255,255,0.22); font-size: 11px; width: 190px; flex-shrink: 0; line-height: 1.55; }
+    .box { padding: 20px 32px; background: #0d0d1a; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; display: flex; align-items: center; }
+  </style>
+</head>
+<body>
+
+<!-- Shared orbital icon template: cx=22 cy=26, large orbit r=18, small orbit rx=18 ry=7 rotated -28° -->
+
+<!-- 01: .ai pulse glow — base in sky blue, pulses electric cyan -->
+<div class="row">
+  <div class="num">01</div>
+  <div class="desc">.ai pulse glow — base blue, pulses electric cyan</div>
+  <div class="box">
+    <svg width="210" height="48" viewBox="0 0 210 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g01" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o01s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o01s"/></animateMotion></circle></g>
+      <!-- base text -->
+      <text font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">
+        <tspan x="48" y="33" fill="#ffffff">velloris</tspan><tspan fill="#38bdf8">.ai</tspan>
+      </text>
+      <!-- glow overlay .ai -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5" filter="url(#g01)" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;1;1;1;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
+        <tspan fill-opacity="0">velloris</tspan><tspan fill="#00d4ff">.ai</tspan>
+      </text>
+    </svg>
+  </div>
+</div>
+
+<!-- 02: .ai heavy + electric double glow -->
+<div class="row">
+  <div class="num">02</div>
+  <div class="desc">velloris light / .AI heavy with strong electric glow</div>
+  <div class="box">
+    <svg width="210" height="48" viewBox="0 0 210 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g02" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o02s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o02s"/></animateMotion></circle></g>
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="300" fill="rgba(255,255,255,0.7)" letter-spacing="-0.3">velloris</text>
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="300" fill="rgba(255,255,255,0.7)" letter-spacing="-0.3">
+        <tspan fill-opacity="0">velloris</tspan><tspan font-weight="900" fill="#00d4ff" filter="url(#g02)">.AI</tspan>
+      </text>
+    </svg>
+  </div>
+</div>
+
+<!-- 03: gradient .ai from blue to purple -->
+<div class="row">
+  <div class="num">03</div>
+  <div class="desc">velloris white + .ai in blue→purple gradient</div>
+  <div class="box">
+    <svg width="210" height="48" viewBox="0 0 210 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr03" x1="130" y1="0" x2="165" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#38bdf8"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient>
+        <filter id="g03" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o03s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o03s"/></animateMotion></circle></g>
+      <text font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">
+        <tspan x="48" y="33" fill="#ffffff">velloris</tspan><tspan fill="url(#gr03)">.ai</tspan>
+      </text>
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5" filter="url(#g03)" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.9;1;0.9;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="4s" repeatCount="indefinite"/>
+        <tspan fill-opacity="0">velloris</tspan><tspan fill="url(#gr03)">.ai</tspan>
+      </text>
+    </svg>
+  </div>
+</div>
+
+<!-- 04: dot "." styled as glowing orb, ai plain blue -->
+<div class="row">
+  <div class="num">04</div>
+  <div class="desc">Period as glowing orb, ai in calm blue</div>
+  <div class="box">
+    <svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g04dot" x="-300%" y="-300%" width="700%" height="700%">
+          <feGaussianBlur stdDeviation="3.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o04s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o04s"/></animateMotion></circle></g>
+      <!-- velloris white -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="-0.5">velloris</text>
+      <!-- glowing dot orb instead of period -->
+      <circle cx="131" cy="30" r="3" fill="#00d4ff" filter="url(#g04dot)">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="2.5;3.5;2.5" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <!-- ai in blue -->
+      <text x="137" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" fill="#38bdf8" letter-spacing="-0.5">ai</text>
+    </svg>
+  </div>
+</div>
+
+<!-- 05: velloris.ai — underline arc connecting v to i through .ai -->
+<div class="row">
+  <div class="num">05</div>
+  <div class="desc">Gradient underline only under .ai with glow endpoints</div>
+  <div class="box">
+    <svg width="210" height="54" viewBox="0 0 210 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ul05" x1="128" y1="0" x2="164" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#38bdf8"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient>
+        <path id="o05s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o05s"/></animateMotion></circle></g>
+      <text font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">
+        <tspan x="48" y="33" fill="#ffffff">velloris</tspan><tspan fill="#38bdf8">.ai</tspan>
+      </text>
+      <!-- gradient underline under .ai -->
+      <rect x="128" y="39" width="38" height="1.5" rx="1" fill="url(#ul05)" opacity="0.8"/>
+      <circle cx="128" cy="39.75" r="2.5" fill="#38bdf8" opacity="0.9"/>
+      <circle cx="166" cy="39.75" r="2.5" fill="#a855f7" opacity="0.9"/>
+    </svg>
+  </div>
+</div>
+
+<!-- 06: .ai as superscript badge -->
+<div class="row">
+  <div class="num">06</div>
+  <div class="desc">.ai as small superscript badge in blue</div>
+  <div class="box">
+    <svg width="210" height="52" viewBox="0 0 210 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g06" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o06s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o06s"/></animateMotion></circle></g>
+      <text x="48" y="36" font-family="'Inter',sans-serif" font-size="26" font-weight="700" fill="#ffffff" letter-spacing="-0.5">velloris</text>
+      <!-- .ai superscript -->
+      <text x="133" y="18" font-family="'Inter',sans-serif" font-size="13" font-weight="700" fill="#38bdf8" filter="url(#g06)">.ai</text>
+    </svg>
+  </div>
+</div>
+
+<!-- 07: velloris — no dot, space, AI in all caps bold blue -->
+<div class="row">
+  <div class="num">07</div>
+  <div class="desc">velloris·AI — mid-dot separator, AI caps in cyan</div>
+  <div class="box">
+    <svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g07" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o07s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o07s"/></animateMotion></circle></g>
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="-0.5">velloris</text>
+      <!-- mid dot -->
+      <circle cx="132" cy="27" r="2.5" fill="rgba(56,189,248,0.5)"/>
+      <!-- AI caps with glow -->
+      <text x="138" y="33" font-family="'Inter',sans-serif" font-size="22" font-weight="900" fill="#00d4ff" filter="url(#g07)" letter-spacing="1">AI</text>
+    </svg>
+  </div>
+</div>
+
+<!-- 08: velloris in white, .ai in outlined/stroke style -->
+<div class="row">
+  <div class="num">08</div>
+  <div class="desc">.ai outlined stroke with inner glow — glass effect</div>
+  <div class="box">
+    <svg width="210" height="48" viewBox="0 0 210 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g08" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o08s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o08s"/></animateMotion></circle></g>
+      <!-- velloris solid white -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="-0.5">velloris</text>
+      <!-- .ai: white fill + stroke outline glow -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">
+        <tspan fill-opacity="0">velloris</tspan>
+        <tspan fill="#ffffff" stroke="#38bdf8" stroke-width="0.6" paint-order="stroke" filter="url(#g08)">.ai</tspan>
+      </text>
+    </svg>
+  </div>
+</div>
+
+<!-- 09: i in velloris AND .ai both glow — double highlight -->
+<div class="row">
+  <div class="num">09</div>
+  <div class="desc">Double glow — "i" in velloris + full ".ai" pulse together</div>
+  <div class="box">
+    <svg width="210" height="48" viewBox="0 0 210 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g09" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o09s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#0ea5e9" stroke-width="0.9" opacity="0.4"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#38bdf8" stroke-width="0.7" opacity="0.3" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.6" fill="#38bdf8"/><circle cx="22" cy="26" r="1.3" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="2" fill="#0ea5e9"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="4s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.5" fill="#a855f7"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#o09s"/></animateMotion></circle></g>
+      <!-- base text: i in velloris + .ai all in sky blue, rest white -->
+      <text font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">
+        <tspan x="48" y="33" fill="#ffffff">vellor</tspan><tspan fill="#38bdf8">i</tspan><tspan fill="#ffffff">s</tspan><tspan fill="#38bdf8">.ai</tspan>
+      </text>
+      <!-- glow overlay "i" in velloris -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5" filter="url(#g09)" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;1;1;1;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
+        <tspan fill-opacity="0">vellor</tspan><tspan fill="#00d4ff">i</tspan>
+      </text>
+      <!-- glow overlay ".ai" -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5" filter="url(#g09)" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;1;1;1;0;0;0" keyTimes="0;0.18;0.36;0.46;0.5;0.54;0.64;0.82;1" dur="3.5s" repeatCount="indefinite"/>
+        <tspan fill-opacity="0">velloris</tspan><tspan fill="#00d4ff">.ai</tspan>
+      </text>
+    </svg>
+  </div>
+</div>
+
+<!-- 10: velloris in thin, .ai in bold gradient, orbital icon matches -->
+<div class="row">
+  <div class="num">10</div>
+  <div class="desc">Ultra clean — velloris feather thin, .ai bold gradient + slow pulse</div>
+  <div class="box">
+    <svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr10" x1="128" y1="15" x2="168" y2="38" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#60a5fa"/><stop offset="1" stop-color="#818cf8"/>
+        </linearGradient>
+        <filter id="g10" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="3.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="o10s" d="M 40,26 A 18,7,0,1,0,4,26 A 18,7,0,1,0,40,26"/>
+      </defs>
+      <ellipse cx="22" cy="26" rx="18" ry="18" stroke="#60a5fa" stroke-width="0.9" opacity="0.35"/>
+      <ellipse cx="22" cy="26" rx="18" ry="7" stroke="#818cf8" stroke-width="0.7" opacity="0.25" transform="rotate(-28 22 26)"/>
+      <circle cx="22" cy="26" r="2.4" fill="#60a5fa"/><circle cx="22" cy="26" r="1.2" fill="#fff"/>
+      <g><circle cx="22" cy="8" r="1.8" fill="#60a5fa"><animateTransform attributeName="transform" type="rotate" from="0 22 26" to="360 22 26" dur="5s" repeatCount="indefinite"/></circle></g>
+      <g transform="rotate(-28 22 26)"><circle r="1.4" fill="#818cf8"><animateMotion dur="9s" repeatCount="indefinite"><mpath href="#o10s"/></animateMotion></circle></g>
+      <!-- velloris ultra thin -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="26" font-weight="300" fill="rgba(255,255,255,0.65)" letter-spacing="0.5">velloris</text>
+      <!-- .ai bold gradient with slow pulse glow -->
+      <text x="48" y="33" font-family="'Inter',sans-serif" font-size="26" font-weight="300" letter-spacing="0.5">
+        <tspan fill-opacity="0">velloris</tspan>
+        <tspan font-weight="800" fill="url(#gr10)" filter="url(#g10)">.ai</tspan>
+      </text>
+    </svg>
+  </div>
+</div>
+
+</body>
+</html>
