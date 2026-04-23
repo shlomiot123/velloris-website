@@ -1044,26 +1044,58 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   .hero-ctas .btn { justify-content: center; }
   .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 16px 28px; }
 
-  /* ── WHO WE HELP: tabs ── */
+  /* ── WHO WE HELP: stacked cards ── */
   .serve-grid { display: none; }
   .serve-mobile-tabs { display: block; }
-  .stab-btns {
-    display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 0;
+  .sstack-cards {
+    position: relative; height: 230px; margin-bottom: 16px;
   }
-  .stab {
-    flex: 1; background: none; border: none; border-bottom: 2px solid transparent;
-    color: #94a3b8; font-size: 13px; font-weight: 600; padding: 12px 6px;
-    cursor: pointer; font-family: inherit; margin-bottom: -1px; transition: all 0.2s;
+  .sstack-card {
+    position: absolute; inset: 0; border-radius: 16px; padding: 24px 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.45s cubic-bezier(0.34,1.4,0.64,1), opacity 0.35s ease;
+    will-change: transform;
   }
-  .stab.active { color: #22d3ee; border-bottom-color: #22d3ee; }
-  .stab-panel { display: none; padding: 26px 0 4px; }
-  .stab-panel.active { display: block; }
-  .stab-num {
-    font-size: 52px; font-weight: 800; line-height: 1; letter-spacing: -3px;
-    color: rgba(34,211,238,0.1); margin-bottom: 10px;
+  .sstack-front {
+    background: linear-gradient(135deg,#1e1040,#0f1a2e);
+    border: 1px solid rgba(139,92,246,0.35); z-index: 3; cursor: pointer;
   }
-  .stab-panel h3 { font-size: 22px; font-weight: 700; color: #f8fafc; margin-bottom: 12px; }
-  .stab-panel p  { font-size: 15px; line-height: 1.7; color: #94a3b8; }
+  .sstack-mid {
+    background: linear-gradient(135deg,#0a1628,#0d1c30);
+    border: 1px solid rgba(34,211,238,0.2); z-index: 2;
+    transform: translateY(11px) scale(0.955);
+  }
+  .sstack-back {
+    background: linear-gradient(135deg,#060e1c,#0b1624);
+    border: 1px solid rgba(59,130,246,0.15); z-index: 1;
+    transform: translateY(22px) scale(0.91);
+  }
+  .sstack-card.sstack-exit {
+    transform: translateX(115%) rotate(9deg) !important;
+    opacity: 0; z-index: 4;
+  }
+  .sstack-card.sstack-front { cursor: pointer; }
+  .sstack-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .sstack-num {
+    font-size: 46px; font-weight: 900; line-height: 1;
+    font-family: 'Courier New', monospace; letter-spacing: -3px;
+    color: rgba(255,255,255,0.1);
+  }
+  .sstack-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    background: rgba(139,92,246,0.15); color: #a78bfa;
+    border: 1px solid rgba(139,92,246,0.3); padding: 3px 8px; border-radius: 20px;
+  }
+  .sstack-badge--cyan { background: rgba(34,211,238,0.12); color: #22d3ee; border-color: rgba(34,211,238,0.3); }
+  .sstack-badge--blue { background: rgba(59,130,246,0.12); color: #60a5fa; border-color: rgba(59,130,246,0.3); }
+  .sstack-card h3 { font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px; }
+  .sstack-card p  { font-size: 14px; line-height: 1.65; color: #94a3b8; }
+  .sstack-hint { text-align: center; font-size: 11px; color: #475569; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .sstack-dots { display: flex; gap: 6px; justify-content: center; }
+  .sstack-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.12); transition: all 0.3s; }
+  .sstack-dot.active { background: #8b5cf6; width: 18px; border-radius: 3px; }
 
   /* ── SERVICES: accordion ── */
   .svc-grid { display: none; }
