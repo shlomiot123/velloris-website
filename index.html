@@ -135,6 +135,30 @@
           <div class="serve-line"></div>
         </div>
       </div>
+
+      <!-- MOBILE ONLY: tabs -->
+      <div class="serve-mobile-tabs">
+        <div class="stab-btns">
+          <button class="stab active" onclick="stab(0)">Startups</button>
+          <button class="stab"        onclick="stab(1)">Mid-Size</button>
+          <button class="stab"        onclick="stab(2)">Enterprise</button>
+        </div>
+        <div class="stab-panel active" id="stab-0">
+          <div class="stab-num">01</div>
+          <h3>Startups</h3>
+          <p>Moving fast and need to make the right AI bets early, without wasting runway on the wrong tools or experiments.</p>
+        </div>
+        <div class="stab-panel" id="stab-1">
+          <div class="stab-num">02</div>
+          <h3>Mid-Size Companies</h3>
+          <p>Scaling teams that need a clear AI strategy before complexity makes it harder to change course.</p>
+        </div>
+        <div class="stab-panel" id="stab-2">
+          <div class="stab-num">03</div>
+          <h3>Enterprise</h3>
+          <p>Large organizations navigating internal alignment, governance, and the challenge of moving quickly at scale.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -225,6 +249,59 @@
         </div>
 
       </div>
+
+      <!-- MOBILE ONLY: accordion -->
+      <div class="svc-mobile-acc">
+        <div class="macc-item" onclick="macc(this)">
+          <button class="macc-trigger">
+            <div class="macc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>AI Readiness Assessment</h3>
+            <svg class="macc-chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="macc-body"><p>A deep diagnostic of where your organization stands today: strategy gaps, tooling, processes, and team readiness. You get a clear picture of where you are and what needs to change.</p></div>
+        </div>
+        <div class="macc-item" onclick="macc(this)">
+          <button class="macc-trigger">
+            <div class="macc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>AI Strategy & Roadmap</h3>
+            <svg class="macc-chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="macc-body"><p>Clear direction, prioritized initiatives, and a multi-quarter plan with measurable milestones and KPIs — so leadership knows exactly where the organization is going and how to get there.</p></div>
+        </div>
+        <div class="macc-item" onclick="macc(this)">
+          <button class="macc-trigger">
+            <div class="macc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 8v3m0 3v.01M8 11h3m3 0h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <h3>Use Case Discovery & Prioritization</h3>
+            <svg class="macc-chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="macc-body"><p>Structured sessions to surface high-value AI opportunities across your business and rank them by ROI, feasibility, and strategic fit. Find the right bets before committing resources.</p></div>
+        </div>
+        <div class="macc-item" onclick="macc(this)">
+          <button class="macc-trigger">
+            <div class="macc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <h3>Organization Enablement</h3>
+            <svg class="macc-chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="macc-body"><p>Executive AI literacy programs, role definition for AI-native teams, and a change management framework that builds a culture ready to lead AI — not just adopt it.</p></div>
+        </div>
+        <div class="macc-item" onclick="macc(this)">
+          <button class="macc-trigger">
+            <div class="macc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Vendor & Technology Advisory</h3>
+            <svg class="macc-chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="macc-body"><p>Independent, vendor-neutral guidance on model selection, platform evaluation, and build-vs-buy decisions — so you invest in the right tools for your specific context, not the loudest vendor.</p></div>
+        </div>
+        <div class="macc-item" onclick="macc(this)">
+          <button class="macc-trigger">
+            <div class="macc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>AI Governance & Risk</h3>
+            <svg class="macc-chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="macc-body"><p>Policies, accountability frameworks, and risk management so your organization moves fast — and responsibly. Covering data usage, regulatory compliance, and operational risk.</p></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -464,5 +541,12 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    function stab(idx) {
+      document.querySelectorAll('.stab').forEach((b,i) => b.classList.toggle('active', i===idx));
+      document.querySelectorAll('.stab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+    }
+    function macc(item) { item.classList.toggle('open'); }
+  </script>
 </body>
 </html>
