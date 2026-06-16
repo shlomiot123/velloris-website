@@ -17,6 +17,7 @@
   --accent-2:  #a855f7;
   --grad:      linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
   --grad-text: linear-gradient(135deg, #6366f1 0%, #a855f7 60%, #3b82f6 100%);
+  --mono:      'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --nav-h:     72px;
   --container: 1180px;
