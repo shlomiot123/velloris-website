@@ -366,13 +366,14 @@ function revealHero() {
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   // Type by stepping inline width in ch units (text already in DOM).
-  function typeWidth(el, text, speed) {
+  function typeWidth(el, speed) {
+    const len = el.textContent.length;
     return new Promise(resolve => {
       el.classList.add('typing');
       el.style.width = '0ch';
       let i = 0;
       (function step() {
-        if (i <= text.length) {
+        if (i <= len) {
           el.style.width = i + 'ch';
           i++;
           setTimeout(step, speed);
@@ -386,22 +387,21 @@ function revealHero() {
   }
 
   async function run() {
+    if (!cursor) return;
     cursor.style.opacity = '0';
     termBar?.classList.add('visible');
     await sleep(220);
 
     // Command
     cmdLine?.classList.add('visible');
-    if (cmdText) await typeWidth(cmdText, cmdText.textContent, 38);
+    if (cmdText) await typeWidth(cmdText, 38);
     await sleep(260);
 
     // Headline lines, cursor moves to the active line
     cursor.style.opacity = '1';
     for (const line of lines) {
-      if (cursor.previousElementSibling !== line) {
-        line.after(cursor);          // park cursor at end of current line
-      }
-      await typeWidth(line, line.textContent, 42);
+      line.after(cursor);          // park cursor at end of current line
+      await typeWidth(line, 42);
     }
     await sleep(180);
 
