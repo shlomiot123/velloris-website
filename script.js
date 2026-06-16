@@ -21,7 +21,7 @@
     smx = W / 2; smy = H / 2;
 
     if (W <= 768) {
-      const lastWrap = document.querySelector('.hero-heading .line-wrap:last-child');
+      const lastWrap = document.getElementById('hlLine3');
       if (lastWrap) {
         const lineRect   = lastWrap.getBoundingClientRect();
         const canvasRect = canvas.getBoundingClientRect();
