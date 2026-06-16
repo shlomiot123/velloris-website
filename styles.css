@@ -477,38 +477,6 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
 .btn-arrow { transition: transform 0.2s var(--ease); }
 .btn-mono:hover .btn-arrow { transform: translateX(4px); }
 
-.hero-stats {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--smooth) 1.28s, transform 0.7s var(--smooth) 1.28s;
-}
-.hero-stats.visible { opacity: 1; transform: translateY(0); }
-.hstat { display: flex; flex-direction: column; gap: 5px; }
-.hstat-val {
-  font-size: clamp(28px, 3.2vw, 44px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: #fff;
-  line-height: 1;
-}
-.hstat-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.hstat-sep {
-  width: 1px;
-  height: 44px;
-  background: rgba(255,255,255,0.1);
-  flex-shrink: 0;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -1035,9 +1003,8 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   .hero-heading { font-size: clamp(34px, 9vw, 48px); }
   .term-bar { margin-bottom: 22px; }
   .hero-sub { margin-bottom: 28px; }
-  .hero-ctas { margin-bottom: 24px; }
-  .hero-stats { gap: 20px; }
-  .hstat-sep { display: none; }
+  .hero-ctas { margin-bottom: 0; }
+  .cmd-line { font-size: 13px; }
 
   .wave-sep { height: 32px; }
 
@@ -1084,7 +1051,7 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   .hero-heading { font-size: clamp(30px, 10.5vw, 38px); }
   .hero-ctas { flex-direction: column; align-items: stretch; margin-bottom: 20px; }
   .hero-ctas .btn { justify-content: center; }
-  .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 16px 28px; }
+  .term-bar { font-size: 12px; flex-wrap: wrap; }
 
   /* ── WHO WE HELP: stacked cards ── */
   .serve-grid { display: none; }
