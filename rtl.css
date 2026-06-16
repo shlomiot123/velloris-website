@@ -35,6 +35,9 @@
 /* "Why" item accent dash flips to the right edge (desktop) */
 [dir="rtl"] .why-item::before { left: auto; right: 20px; }
 
+/* "Who we help" card accent underline grows from the right */
+[dir="rtl"] .serve-line { left: auto; right: 0; }
+
 /* Process desktop: inter-column padding + hover underline mirrored */
 [dir="rtl"] .process-step { padding: 0 0 0 28px; }
 [dir="rtl"] .process-step::before {
