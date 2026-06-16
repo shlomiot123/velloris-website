@@ -1,0 +1,72 @@
+/* ============================================================
+   VELLORIS — RTL OVERRIDES (Hebrew page only)
+   Loaded after styles.css. All rules scoped to [dir="rtl"].
+   ============================================================ */
+
+/* Hebrew body font (Heebo); JetBrains Mono kept for terminal/code */
+[dir="rtl"] body {
+  font-family: 'Heebo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Keep the terminal bar, command line, and logos visually LTR */
+[dir="rtl"] .term-bar,
+[dir="rtl"] .cmd-line,
+[dir="rtl"] .nav-logo {
+  direction: ltr;
+}
+
+/* Scroll progress bar grows from the right edge */
+[dir="rtl"] .scroll-bar { left: auto; right: 0; }
+
+/* Headline cursor sits at the logical end (left side in RTL) */
+[dir="rtl"] .hl-cursor { margin-left: 0; margin-right: 6px; }
+
+/* CTA arrow nudges toward the left (forward direction in RTL) on hover */
+[dir="rtl"] .btn-mono:hover .btn-arrow { transform: translateX(-4px); }
+
+/* Team quote accent border flips to the right */
+[dir="rtl"] .team-quote {
+  border-left: none;
+  border-right: 2px solid var(--accent);
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+/* "Why" item accent dash flips to the right edge (desktop) */
+[dir="rtl"] .why-item::before { left: auto; right: 20px; }
+
+/* "Who we help" card accent underline grows from the right */
+[dir="rtl"] .serve-line { left: auto; right: 0; }
+
+/* Process desktop: inter-column padding + hover underline mirrored */
+[dir="rtl"] .process-step { padding: 0 0 0 28px; }
+[dir="rtl"] .process-step::before {
+  left: 14px;
+  right: -14px;
+  transform-origin: right;
+}
+
+@media (max-width: 768px) {
+  /* Services accordion: text alignment + content indent flip */
+  [dir="rtl"] .macc-trigger { text-align: right; }
+  [dir="rtl"] .macc-body { padding: 0 48px 0 0; }
+  [dir="rtl"] .macc-item.open .macc-body { padding: 0 48px 16px 0; }
+
+  /* Process vertical timeline: rail + number to the right */
+  [dir="rtl"] .process-track { padding-left: 0; padding-right: 46px; }
+  [dir="rtl"] .process-track::before { left: auto; right: 14px; }
+  [dir="rtl"] .step-num { left: auto; right: -40px; }
+
+  /* "Why" statement cards: accent border + big watermark number flip */
+  [dir="rtl"] .why-item { border-left: none; border-right: 3px solid transparent; }
+  [dir="rtl"] .why-item:nth-child(1) { border-right-color: #8b5cf6; }
+  [dir="rtl"] .why-item:nth-child(2) { border-right-color: #22d3ee; }
+  [dir="rtl"] .why-item:nth-child(3) { border-right-color: #3b82f6; }
+  [dir="rtl"] .why-item:nth-child(4) { border-right-color: #0ea5e9; }
+  [dir="rtl"] .why-num { right: auto; left: -6px; }
+
+  /* Stacked "who we help" card exits to the left */
+  [dir="rtl"] .sstack-card.sstack-exit {
+    transform: translateX(-115%) rotate(-9deg) !important;
+  }
+}

@@ -506,11 +506,13 @@ function initForm() {
   const form    = document.getElementById('contactForm');
   const btn     = document.getElementById('formSubmit');
   const success = document.getElementById('formSuccess');
+  const sendingText = btn?.dataset.sending || 'Sending...';
+  const retryText   = btn?.dataset.retry   || 'Try Again';
 
   form?.addEventListener('submit', async e => {
     e.preventDefault();
     btn.disabled = true;
-    btn.querySelector('.btn-text').textContent = 'Sending...';
+    btn.querySelector('.btn-text').textContent = sendingText;
 
     const data = new FormData(form);
     data.append('access_key', '358ed785-0ccc-4750-b47e-5d5a5c6bea48');
@@ -530,11 +532,11 @@ function initForm() {
         success.classList.add('show');
       } else {
         btn.disabled = false;
-        btn.querySelector('.btn-text').textContent = 'Try Again';
+        btn.querySelector('.btn-text').textContent = retryText;
       }
     } catch {
       btn.disabled = false;
-      btn.querySelector('.btn-text').textContent = 'Try Again';
+      btn.querySelector('.btn-text').textContent = retryText;
     }
   });
 }

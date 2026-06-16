@@ -251,6 +251,20 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   transform: translateY(-1px);
   box-shadow: 0 4px 24px rgba(99,102,241,0.5);
 }
+.nav-lang {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1px solid var(--border-d);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+}
+.nav-lang:hover {
+  border-color: rgba(99,102,241,0.5);
+  color: #fff;
+}
 
 /* Hamburger */
 .hamburger {
