@@ -21,7 +21,7 @@
     smx = W / 2; smy = H / 2;
 
     if (W <= 768) {
-      const lastWrap = document.querySelector('.hero-heading .line-wrap:last-child');
+      const lastWrap = document.getElementById('hlLine3');
       if (lastWrap) {
         const lineRect   = lastWrap.getBoundingClientRect();
         const canvasRect = canvas.getBoundingClientRect();
@@ -45,21 +45,11 @@
   });
 
   const waves = [
-    { y:0.50, amp:60, freq:0.0030, spd:0.003, ph:0.0,  r:99,  g:102, b:241, a:0.08, w:40,  blur:60, bc:[80,60,220]   },
-    { y:0.52, amp:50, freq:0.0025, spd:0.002, ph:1.2,  r:168, g:85,  b:247, a:0.06, w:35,  blur:55, bc:[140,50,200]  },
-    { y:0.44, amp:34, freq:0.0060, spd:0.008, ph:0.5,  r:99,  g:102, b:241, a:0.18, w:8,   blur:22, bc:[99,102,241]  },
-    { y:0.47, amp:28, freq:0.0075, spd:0.010, ph:1.8,  r:168, g:85,  b:247, a:0.22, w:7,   blur:20, bc:[168,85,247]  },
-    { y:0.53, amp:26, freq:0.0065, spd:0.007, ph:3.1,  r:56,  g:189, b:248, a:0.16, w:6,   blur:18, bc:[56,189,248]  },
-    { y:0.57, amp:32, freq:0.0055, spd:0.009, ph:4.4,  r:59,  g:130, b:246, a:0.18, w:7,   blur:20, bc:[59,130,246]  },
-    { y:0.43, amp:30, freq:0.0080, spd:0.012, ph:0.2,  r:140, g:100, b:255, a:0.70, w:1.5, blur:8,  bc:[140,100,255] },
-    { y:0.46, amp:24, freq:0.0095, spd:0.009, ph:2.3,  r:168, g:85,  b:247, a:0.80, w:1.2, blur:6,  bc:[168,85,247]  },
-    { y:0.50, amp:20, freq:0.0070, spd:0.014, ph:1.1,  r:56,  g:189, b:248, a:0.65, w:1.0, blur:7,  bc:[56,189,248]  },
-    { y:0.54, amp:26, freq:0.0085, spd:0.011, ph:3.7,  r:99,  g:102, b:241, a:0.75, w:1.3, blur:8,  bc:[99,102,241]  },
-    { y:0.58, amp:22, freq:0.0060, spd:0.008, ph:5.0,  r:59,  g:130, b:246, a:0.60, w:1.0, blur:6,  bc:[59,130,246]  },
-    { y:0.48, amp:22, freq:0.0100, spd:0.016, ph:0.8,  r:200, g:150, b:255, a:0.90, w:1.0, blur:12, bc:[200,150,255] },
-    { y:0.52, amp:18, freq:0.0090, spd:0.013, ph:2.9,  r:100, g:200, b:255, a:0.85, w:0.9, blur:10, bc:[100,200,255] },
-    { y:0.38, amp:45, freq:0.0040, spd:0.004, ph:0.6,  r:80,  g:60,  b:200, a:0.05, w:50,  blur:70, bc:[60,40,180]   },
-    { y:0.62, amp:40, freq:0.0035, spd:0.003, ph:2.0,  r:120, g:40,  b:180, a:0.05, w:45,  blur:65, bc:[100,30,160]  },
+    { y:0.64, amp:34, freq:0.0060, spd:0.008, ph:0.5,  r:99,  g:102, b:241, a:0.16, w:1.3, blur:10, bc:[99,102,241]  },
+    { y:0.68, amp:28, freq:0.0075, spd:0.010, ph:1.8,  r:168, g:85,  b:247, a:0.18, w:1.1, blur:10, bc:[168,85,247]  },
+    { y:0.72, amp:26, freq:0.0065, spd:0.007, ph:3.1,  r:56,  g:189, b:248, a:0.14, w:1.0, blur:8,  bc:[56,189,248]  },
+    { y:0.62, amp:22, freq:0.0090, spd:0.012, ph:0.2,  r:140, g:100, b:255, a:0.50, w:1.0, blur:8,  bc:[140,100,255] },
+    { y:0.70, amp:20, freq:0.0085, spd:0.011, ph:3.7,  r:99,  g:102, b:241, a:0.45, w:1.0, blur:8,  bc:[99,102,241]  },
   ];
 
   const SIGMA = 240, PULL = 0.22, S2 = 2 * SIGMA * SIGMA;
@@ -349,21 +339,78 @@ class ParticleCanvas {
   }
 }
 
-/* ---- 5. HERO TEXT REVEAL ---- */
+/* ---- 5. HERO TYPE-EVERYTHING REVEAL ---- */
 function revealHero() {
-  // Badge
-  setTimeout(() => document.getElementById('heroBadge')?.classList.add('visible'), 100);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const termBar = document.getElementById('termBar');
+  const cmdLine = document.getElementById('cmdLine');
+  const cmdText = cmdLine?.querySelector('.cmd-text');
+  const sub     = document.getElementById('heroSub');
+  const ctas    = document.getElementById('heroCtas');
+  const cursor  = document.getElementById('hlCursor');
+  const lines   = [
+    document.getElementById('hlLine1'),
+    document.getElementById('hlLine2'),
+    document.getElementById('hlLine3'),
+  ].filter(Boolean);
 
-  // Lines
-  const lines = document.querySelectorAll('.hero-heading .line-inner');
-  lines.forEach((line, i) => {
-    setTimeout(() => line.classList.add('visible'), 250 + i * 180);
-  });
+  // Reduced motion / safety: show everything immediately, no typing.
+  if (reduce) {
+    termBar?.classList.add('visible');
+    cmdLine?.classList.add('visible');
+    sub?.classList.add('visible');
+    ctas?.classList.add('visible');
+    return;
+  }
 
-  // Rest
-  setTimeout(() => document.getElementById('heroSub')?.classList.add('visible'), 820);
-  setTimeout(() => document.getElementById('heroCtas')?.classList.add('visible'), 1020);
-  setTimeout(() => document.getElementById('heroStats')?.classList.add('visible'), 1220);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  // Type by stepping inline width in ch units (text already in DOM).
+  function typeWidth(el, speed) {
+    const len = el.textContent.length;
+    return new Promise(resolve => {
+      el.classList.add('typing');
+      el.style.width = '0ch';
+      let i = 0;
+      (function step() {
+        if (i <= len) {
+          el.style.width = i + 'ch';
+          i++;
+          setTimeout(step, speed);
+        } else {
+          el.style.width = '';        // back to natural flow
+          el.classList.remove('typing');
+          resolve();
+        }
+      })();
+    });
+  }
+
+  async function run() {
+    if (!cursor) return;
+    cursor.style.opacity = '0';
+    termBar?.classList.add('visible');
+    await sleep(220);
+
+    // Command
+    cmdLine?.classList.add('visible');
+    if (cmdText) await typeWidth(cmdText, 38);
+    await sleep(260);
+
+    // Headline lines, cursor moves to the active line
+    cursor.style.opacity = '1';
+    for (const line of lines) {
+      line.after(cursor);          // park cursor at end of current line
+      await typeWidth(line, 42);
+    }
+    await sleep(180);
+
+    // Subhead + CTAs
+    sub?.classList.add('visible');
+    await sleep(160);
+    ctas?.classList.add('visible');
+  }
+  run();
 }
 
 /* ---- 6. INTERSECTION OBSERVER — SCROLL REVEALS ---- */
