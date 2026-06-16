@@ -425,6 +425,14 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   font-weight: 800;
 }
 .hl-line { display: block; }
+/* Clip only during the typing animation; at rest lines wrap normally. */
+.hl-line.typing,
+.cmd-text.typing {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: bottom;
+}
 /* During typing JS clips each line; default state is fully visible (reduced-motion / no-JS) */
 .hl-cursor {
   display: inline-block;

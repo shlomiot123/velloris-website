@@ -339,21 +339,78 @@ class ParticleCanvas {
   }
 }
 
-/* ---- 5. HERO TEXT REVEAL ---- */
+/* ---- 5. HERO TYPE-EVERYTHING REVEAL ---- */
 function revealHero() {
-  // Badge
-  setTimeout(() => document.getElementById('heroBadge')?.classList.add('visible'), 100);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const termBar = document.getElementById('termBar');
+  const cmdLine = document.getElementById('cmdLine');
+  const cmdText = cmdLine?.querySelector('.cmd-text');
+  const sub     = document.getElementById('heroSub');
+  const ctas    = document.getElementById('heroCtas');
+  const cursor  = document.getElementById('hlCursor');
+  const lines   = [
+    document.getElementById('hlLine1'),
+    document.getElementById('hlLine2'),
+    document.getElementById('hlLine3'),
+  ].filter(Boolean);
 
-  // Lines
-  const lines = document.querySelectorAll('.hero-heading .line-inner');
-  lines.forEach((line, i) => {
-    setTimeout(() => line.classList.add('visible'), 250 + i * 180);
-  });
+  // Reduced motion / safety: show everything immediately, no typing.
+  if (reduce) {
+    termBar?.classList.add('visible');
+    cmdLine?.classList.add('visible');
+    sub?.classList.add('visible');
+    ctas?.classList.add('visible');
+    return;
+  }
 
-  // Rest
-  setTimeout(() => document.getElementById('heroSub')?.classList.add('visible'), 820);
-  setTimeout(() => document.getElementById('heroCtas')?.classList.add('visible'), 1020);
-  setTimeout(() => document.getElementById('heroStats')?.classList.add('visible'), 1220);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  // Type by stepping inline width in ch units (text already in DOM).
+  function typeWidth(el, text, speed) {
+    return new Promise(resolve => {
+      el.classList.add('typing');
+      el.style.width = '0ch';
+      let i = 0;
+      (function step() {
+        if (i <= text.length) {
+          el.style.width = i + 'ch';
+          i++;
+          setTimeout(step, speed);
+        } else {
+          el.style.width = '';        // back to natural flow
+          el.classList.remove('typing');
+          resolve();
+        }
+      })();
+    });
+  }
+
+  async function run() {
+    cursor.style.opacity = '0';
+    termBar?.classList.add('visible');
+    await sleep(220);
+
+    // Command
+    cmdLine?.classList.add('visible');
+    if (cmdText) await typeWidth(cmdText, cmdText.textContent, 38);
+    await sleep(260);
+
+    // Headline lines, cursor moves to the active line
+    cursor.style.opacity = '1';
+    for (const line of lines) {
+      if (cursor.previousElementSibling !== line) {
+        line.after(cursor);          // park cursor at end of current line
+      }
+      await typeWidth(line, line.textContent, 42);
+    }
+    await sleep(180);
+
+    // Subhead + CTAs
+    sub?.classList.add('visible');
+    await sleep(160);
+    ctas?.classList.add('visible');
+  }
+  run();
 }
 
 /* ---- 6. INTERSECTION OBSERVER — SCROLL REVEALS ---- */
