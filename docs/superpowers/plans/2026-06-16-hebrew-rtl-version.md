@@ -566,7 +566,7 @@ R&D Director), LinkedIn, the email, and all code/terminal text stay in Latin scr
       <div class="team-grid">
         <div class="team-photo-col reveal-up">
           <div class="team-photo-wrap">
-            <img src="assets/shlomi.jpg" alt="שלמי אוטמזגין — מייסד, Velloris" />
+            <img src="assets/shlomi.jpg" alt="שלומי אוטמזגין — מייסד, Velloris" />
             <div class="team-photo-glow"></div>
           </div>
           <a href="https://www.linkedin.com/in/shlomiot/" target="_blank" rel="noopener noreferrer" class="linkedin-btn">
@@ -575,8 +575,8 @@ R&D Director), LinkedIn, the email, and all code/terminal text stay in Latin scr
           </a>
         </div>
         <div class="team-bio">
-          <h2 class="reveal-text">שלמי אוטמזגין<br/><span class="grad-text">מייסד, Velloris</span></h2>
-          <p class="reveal">עם מעל 20 שנות ניסיון בהובלת ארגוני R&D — מסטארטאפים בתחילת דרכם ועד ארגוני אנטרפרייז גלובליים — שלמי פעל בכל רמה של מערך ההנדסה והמוצר.</p>
+          <h2 class="reveal-text">שלומי אוטמזגין<br/><span class="grad-text">מייסד, Velloris</span></h2>
+          <p class="reveal">עם מעל 20 שנות ניסיון בהובלת ארגוני R&D — מסטארטאפים בתחילת דרכם ועד ארגוני אנטרפרייז גלובליים — שלומי פעל בכל רמה של מערך ההנדסה והמוצר.</p>
           <p class="reveal">כ-CTO של Yad2, הוא בנה והרחיב מאפס ארגון של מעל 100 מהנדסים, היה חלוץ בתהליכי עבודה AI-native באמצעות הטמעת סוכנים אוטונומיים ו-Copilots לאורך כל ה-SDLC, ומילא תפקיד מכריע ברכישת החברה בסך 950 מיליון יורו על ידי Apax Partners.</p>
           <div class="team-career reveal">
             <div class="career-item">
@@ -885,5 +885,5 @@ If no fixes were needed, note that verification passed with no changes and skip 
 ## Self-Review Notes
 
 - **Spec coverage:** architecture (Task 2 file + Task 1 css), RTL document/typography/terminal/arrows (Task 1 + Task 2 markup), content translation with Latin proper nouns (Task 2), mobile JS DATA copy (Task 2 inline script), form email LTR + web3forms key reuse (Task 2), switcher + hreflang (Task 2 + Task 3), verification (Task 4) — all present.
-- **Decision recorded:** the founder's personal name is rendered in Hebrew (שלמי אוטמזגין) on the Hebrew page, while the brand (Velloris) and job titles (CTO, VP R&D) stay Latin. This extends the spec's proper-noun rule; flag to the user if they'd prefer the Latin name.
+- **Decision recorded:** the founder's personal name is rendered in Hebrew (שלומי אוטמזגין, per user) on the Hebrew page, while the brand (Velloris) and job titles (CTO, VP R&D) stay Latin.
 - **Naming consistency:** switcher uses `index.html` ↔ `index.he.html` throughout; the new `nav-lang` class is additive (styled by existing `.nav-link`); `rtl.css` selectors all match real classes verified against `styles.css`.
