@@ -394,14 +394,14 @@ function revealHero() {
 
     // Command
     cmdLine?.classList.add('visible');
-    if (cmdText) await typeWidth(cmdText, 38);
+    if (cmdText) await typeWidth(cmdText, 60);
     await sleep(260);
 
     // Headline lines, cursor moves to the active line
     cursor.style.opacity = '1';
     for (const line of lines) {
       line.after(cursor);          // park cursor at end of current line
-      await typeWidth(line, 42);
+      await typeWidth(line, 66);
     }
     await sleep(180);
 
