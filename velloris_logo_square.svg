@@ -1,0 +1,12 @@
+<svg width="500" height="500" viewBox="0 0 500 500" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Velloris.ai square logo</title>
+  <desc>Square logo with dark navy background, purple chevron arrow, and velloris.ai text in white and cyan</desc>
+
+  <rect width="500" height="500" rx="44" fill="#0d1117"/>
+
+  <text x="250" y="235" font-family="'Courier New', 'Consolas', monospace" font-size="70" font-weight="700" fill="#9b5cf6" text-anchor="middle" dominant-baseline="middle">&gt;</text>
+
+  <text x="250" y="318" font-family="'Courier New', 'Consolas', monospace" font-size="53" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+    <tspan fill="#ffffff">velloris</tspan><tspan fill="#22d3ee">.ai</tspan>
+  </text>
+</svg>
