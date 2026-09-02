@@ -1430,3 +1430,441 @@ p  { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: var(--muted);
   transform: translateY(-1px) scale(1.05);
   box-shadow: 0 4px 24px rgba(99,102,241,0.5);
 }
+
+/* ============================================================
+   CAREERS — listing + job detail pages
+   ============================================================ */
+.careers-hero {
+  padding: calc(var(--nav-h) + 60px) 0 40px;
+  background: var(--off);
+}
+.careers-hero h1 {
+  font-size: clamp(34px, 4.6vw, 56px);
+  margin-bottom: 16px;
+}
+.careers-hero p {
+  max-width: 560px;
+  font-size: clamp(16px, 1.3vw, 18px);
+}
+
+.careers-list { padding: 56px 0 var(--pad); background: var(--off); }
+.job-card {
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 32px 36px;
+  transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth), border-color 0.3s;
+}
+.job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(99,102,241,0.3);
+}
+.job-card h3 {
+  color: var(--text);
+  margin-bottom: 10px;
+  font-size: clamp(19px, 2vw, 23px);
+}
+.job-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.job-card-meta span { white-space: nowrap; }
+.job-card-meta .accent { color: var(--accent); font-weight: 600; }
+.job-card-excerpt { margin-bottom: 18px; }
+.job-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.job-card:hover .job-card-cta .btn-arrow { transform: translateX(4px); }
+[dir="rtl"] .job-card:hover .job-card-cta .btn-arrow { transform: translateX(-4px); }
+.careers-empty { color: var(--muted); padding: 40px 0; }
+
+/* ---- Job detail page ---- */
+.job-hero {
+  padding: calc(var(--nav-h) + 60px) 0 40px;
+  background: var(--off);
+}
+.job-hero .job-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 24px;
+  transition: color 0.2s;
+}
+.job-hero .job-back:hover { color: var(--accent); }
+.job-hero h1 {
+  font-size: clamp(30px, 4.2vw, 48px);
+  margin-bottom: 10px;
+}
+.job-hero .job-subtitle {
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--muted);
+  max-width: 640px;
+  margin-bottom: 22px;
+}
+.job-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.job-meta-row .sep { color: var(--border); font-weight: 400; }
+
+.job-body { padding: var(--pad) 0; }
+.job-section { max-width: 720px; margin: 0 0 44px; }
+.job-section:last-child { margin-bottom: 0; }
+.job-section h2 {
+  font-size: clamp(21px, 2vw, 26px);
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.job-section p { margin-bottom: 0; }
+.job-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.job-section ul li {
+  position: relative;
+  padding-inline-start: 22px;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.job-section ul li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grad);
+}
+
+.job-apply {
+  max-width: 720px;
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 32px 36px;
+  margin: 0 0 44px;
+}
+.job-apply h2 { margin-bottom: 12px; }
+.job-apply p { margin-bottom: 20px; }
+
+.job-equal-line {
+  max-width: 720px;
+  font-size: 14px;
+  color: var(--muted);
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   CAREERS — visual refresh (icons, meta pills, cards, founder)
+   ============================================================ */
+.careers-hero, .job-hero { position: relative; overflow: hidden; }
+.careers-hero::before, .job-hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  inset-inline-end: -80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.careers-hero::after, .job-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -120px;
+  inset-inline-start: 8%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.careers-hero .container, .job-hero .container { position: relative; z-index: 1; }
+
+/* meta pills with icons */
+.job-meta-row { border: none; padding-top: 0; }
+.job-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 9px 16px 9px 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+}
+[dir="rtl"] .job-meta-pill { padding: 9px 12px 9px 16px; }
+.job-meta-pill svg { color: var(--accent); flex-shrink: 0; }
+.job-card-meta .job-meta-pill { font-size: 12.5px; padding: 6px 12px 6px 10px; }
+
+/* section heading with icon badge */
+.job-section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.job-section-head h2 { margin-bottom: 0; }
+.job-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* bullet -> mini-card grid */
+.job-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.job-mini-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 20px;
+  transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth), border-color 0.3s;
+}
+.job-mini-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(99,102,241,0.3);
+}
+.job-mini-icon {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: rgba(99,102,241,0.1);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.job-mini-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--muted); }
+
+.job-section strong,
+.job-apply strong,
+.job-mini-card strong { color: var(--text); font-weight: 700; }
+
+/* founder teaser */
+.job-founder {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  margin: 0 0 44px;
+  max-width: 720px;
+}
+.job-founder-photo {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  flex-shrink: 0;
+}
+.job-founder-quote {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  border-inline-start: 2px solid var(--accent);
+  padding-inline-start: 16px;
+  margin-bottom: 8px;
+}
+.job-founder-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  padding-inline-start: 18px;
+}
+
+@media (max-width: 640px) {
+  .job-cards { grid-template-columns: 1fr; }
+  .job-founder { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+/* ============================================================
+   CAREERS — accordion (single-page careers list + detail)
+   ============================================================ */
+.job-acc-list { display: flex; flex-direction: column; gap: 16px; }
+.job-acc-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  transition: box-shadow 0.3s var(--smooth), border-color 0.3s;
+}
+.job-acc-item.open {
+  border-color: rgba(99,102,241,0.3);
+  box-shadow: var(--shadow-md);
+}
+.job-acc-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 32px;
+  text-align: start;
+  cursor: pointer;
+}
+.job-acc-summary h3 {
+  color: var(--text);
+  margin-bottom: 10px;
+  font-size: clamp(19px, 2vw, 23px);
+}
+.job-acc-summary .job-card-excerpt { margin-bottom: 0; }
+.job-acc-chevron {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  transition: transform 0.35s var(--smooth), background 0.3s, border-color 0.3s;
+}
+.job-acc-item.open .job-acc-chevron {
+  transform: rotate(180deg);
+  background: rgba(99,102,241,0.08);
+  border-color: rgba(99,102,241,0.3);
+}
+.job-acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--smooth);
+}
+.job-acc-item.open .job-acc-panel { grid-template-rows: 1fr; }
+.job-acc-panel-inner { overflow: hidden; }
+.job-acc-panel-body {
+  padding: 8px 32px 40px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+/* reuse job-* detail styles inside the accordion panel */
+.job-acc-panel-body .job-meta-row {
+  margin: 24px 0 32px;
+  padding-top: 0;
+  border-top: none;
+}
+.job-acc-panel-body .job-section { max-width: 100%; }
+.job-acc-panel-body .job-founder,
+.job-acc-panel-body .job-apply { max-width: 100%; }
+
+@media (max-width: 640px) {
+  .job-acc-trigger { padding: 22px 20px; }
+  .job-acc-panel-body { padding: 8px 20px 32px; }
+}
+
+/* ============================================================
+   CAREERS — CV upload widget
+   ============================================================ */
+.job-apply--upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 36px;
+}
+.job-apply-status {
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 20px;
+}
+.job-apply-status.success { color: #16a34a; }
+.job-apply-status.error { color: #dc2626; }
+.job-apply--upload .btn[disabled] { opacity: 0.6; cursor: default; transform: none !important; }
+
+/* ============================================================
+   CAREERS — "Open Positions" list label
+   ============================================================ */
+.careers-list-title {
+  font-size: clamp(20px, 2vw, 26px);
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+/* ============================================================
+   CAREERS — hero photo (text + image side by side)
+   ============================================================ */
+.careers-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+}
+.careers-hero-photo {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.careers-hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+@media (max-width: 900px) {
+  .careers-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .careers-hero-photo { order: -1; max-width: 480px; }
+}
+
+/* ============================================================
+   CAREERS PAGE — nav stays in its "scrolled" look at all times
+   (the light hero here has no dark backdrop for a transparent
+   header to sit on, unlike the homepage's dark hero)
+   ============================================================ */
+.careers-page .nav {
+  background: rgba(5, 5, 16, 0.88);
+  border-bottom: 1px solid var(--border-d);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
