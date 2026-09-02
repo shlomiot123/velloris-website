@@ -182,7 +182,14 @@
                 </div>
 
                 <div class="job-apply job-apply--upload">
-                  <input type="file" id="cvInput" class="job-apply-file-input" accept=".pdf,.doc,.docx" hidden />
+                  <iframe name="cvUploadFrame" id="cvUploadFrame" title="" hidden></iframe>
+                  <form id="cvForm" action="https://formsubmit.co/career@velloris.ai" method="POST" enctype="multipart/form-data" target="cvUploadFrame">
+                    <input type="hidden" name="_subject" value="מועמדות: מפתח/ת אוטומציה" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_template" value="box" />
+                    <input type="hidden" name="message" id="cvMessage" value="" />
+                    <input type="file" id="cvInput" name="attachment" class="job-apply-file-input" accept=".pdf,.doc,.docx" hidden />
+                  </form>
                   <button type="button" class="btn btn-primary" id="cvBtn">
                     <span class="btn-text">Upload your CV</span> <span class="btn-arrow">&rarr;</span>
                   </button>
@@ -276,50 +283,38 @@
         }
       }
 
-      // CV upload: pick a file -> send straight to career@velloris.ai via Web3Forms
+      // CV upload: pick a file -> real multipart POST via a hidden iframe target,
+      // sent straight to career@velloris.ai via FormSubmit.co.
+      // (FormSubmit's /ajax/ endpoint silently drops file attachments — confirmed
+      // by testing — so this uses a classic form POST instead.)
       var input = document.getElementById('cvInput');
       var btn = document.getElementById('cvBtn');
       var status = document.getElementById('cvStatus');
-      if (input && btn) {
+      var form = document.getElementById('cvForm');
+      var messageField = document.getElementById('cvMessage');
+      var frame = document.getElementById('cvUploadFrame');
+      if (input && btn && form && frame) {
+        var sending = false;
         btn.addEventListener('click', function () { input.click(); });
+        frame.addEventListener('load', function () {
+          if (!sending) return;
+          sending = false;
+          btn.style.display = 'none';
+          status.className = 'job-apply-status success';
+          status.textContent = '✓ Your CV was sent. We will be in touch.';
+        });
         input.addEventListener('change', function () {
           if (!input.files || !input.files[0]) return;
           var file = input.files[0];
           var btnText = btn.querySelector('.btn-text');
-          var originalText = btnText.textContent;
           btn.disabled = true;
           btnText.textContent = 'Sending…';
           status.className = 'job-apply-status';
           status.textContent = '';
 
-          var data = new FormData();
-          data.append('_subject', 'מועמדות: מפתח/ת אוטומציה');
-          data.append('_captcha', 'false');
-          data.append('_template', 'box');
-          data.append('message', 'New CV received via velloris.ai/careers for the Automation Developer role. File name: ' + file.name);
-          data.append('attachment', file);
-
-          fetch('https://formsubmit.co/ajax/career@velloris.ai', {
-            method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: data
-          })
-            .then(function (r) { return r.json(); })
-            .then(function (json) {
-              if (json.success === 'true' || json.success === true) {
-                btn.style.display = 'none';
-                status.className = 'job-apply-status success';
-                status.textContent = '✓ Your CV was sent. We will be in touch.';
-              } else {
-                throw new Error(json.message || 'submit failed');
-              }
-            })
-            .catch(function () {
-              btn.disabled = false;
-              btnText.textContent = originalText;
-              status.className = 'job-apply-status error';
-              status.textContent = 'Something went wrong — please email career@velloris.ai directly.';
-            });
+          messageField.value = 'New CV received via velloris.ai/careers for the Automation Developer role. File name: ' + file.name;
+          sending = true;
+          form.submit();
         });
       }
     })();
